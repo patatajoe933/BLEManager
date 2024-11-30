@@ -59,18 +59,21 @@ void setup() {
     // pCharacteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
 
     // Add a custom descriptor used by the Minglee app
+    // Only one descriptor matching the mask is supported for each characteristic.
+    // If a characteristic contains multiple descriptors matching the mask, a descriptor may be selected randomly.
     BLEDescriptor *customDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     //Set control configuration
+    //JSON format. Keys are case-sensitive.
     customDescriptor->setValue(
-R"(
-{
-  "type":"title"
-}
-)");
+      // The value of this characteristic will be displayed as the service name.
+      // The order value determines the order in which the service will be displayed in the Minglee app.
+      R"({"type":"serviceName", "order":1})"
+    );
+  
     pCharacteristic->addDescriptor(customDescriptor);
 
     // Set an initial value for the characteristic
-    pCharacteristic->setValue("This Is Title");
+    pCharacteristic->setValue("Service 1");
 
     // Start the BLE service
     pService->start();
