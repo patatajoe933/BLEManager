@@ -33,10 +33,10 @@ void setup() {
     // Configure BLE security settings
     // Static PIN bonding
     BLESecurity *pSecurity = new BLESecurity();
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
-    pSecurity->setCapability(ESP_IO_CAP_NONE);
-    pSecurity->setInitEncryptionKey(ESP_BLE_ENC_KEY_MASK | ESP_BLE_ID_KEY_MASK);
+    // It is important to call setStaticPIN() before setAuthenticationMode() for bonding to work correctly
+    // https://github.com/espressif/arduino-esp32/blob/98da424de638836e400d4a110b9cb9a101e8cc22/libraries/BLE/src/BLESecurity.cpp#L65
     pSecurity->setStaticPIN(123456);
+    pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
 
     // Create a BLE server and set its callback class
     BLEServer *pServer = BLEDevice::createServer();
@@ -52,8 +52,7 @@ void setup() {
                                          BLECharacteristic::PROPERTY_NOTIFY
                                        );
 
-    // Uncomment the following line to enable encrypted access to the characteristic
-    // pCharacteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+    pCharacteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
 
     // Add a custom descriptor used by the Minglee app
     // Only one descriptor matching the mask is supported for each characteristic.
@@ -64,6 +63,8 @@ void setup() {
     customDescriptor->setValue(
       // The value of this characteristic will be displayed as the service name.
       // The order value determines the order in which the service will be displayed in the Minglee app.
+      // Only one serviceName characteristic is supported for each service.
+      // If a service contains multiple serviceName characteristic, a serviceName characteristic may be selected randomly.
       R"({"type":"serviceName", "order":1})"
     );
   
