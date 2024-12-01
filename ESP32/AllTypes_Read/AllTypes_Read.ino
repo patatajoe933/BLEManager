@@ -31,15 +31,12 @@ void setup() {
     BLEDevice::init("Minglee device");
 
     // Configure BLE security settings
+    // Static PIN bonding
     BLESecurity *pSecurity = new BLESecurity();
-    // No bonding (ESP_LE_AUTH_NO_BOND)
-    // Set ESP_LE_AUTH_REQ_SC_MITM_BOND to enable bonding
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_NO_BOND);
-    
-    // Uncomment the following lines to enable PIN-based bonding
-    // pSecurity->setCapability(ESP_IO_CAP_IO);
-    // pSecurity->setInitEncryptionKey(ESP_BLE_ENC_KEY_MASK | ESP_BLE_ID_KEY_MASK);
-    // pSecurity->setStaticPIN(123456);
+    pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
+    pSecurity->setCapability(ESP_IO_CAP_NONE);
+    pSecurity->setInitEncryptionKey(ESP_BLE_ENC_KEY_MASK | ESP_BLE_ID_KEY_MASK);
+    pSecurity->setStaticPIN(123456);
 
     // Create a BLE server and set its callback class
     BLEServer *pServer = BLEDevice::createServer();
