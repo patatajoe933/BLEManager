@@ -5,8 +5,11 @@
 
 // UUID for the BLE service
 #define SERVICE_UUID        "00000001-74ee-43ce-86b2-0dde20dcefd6"
-// UUID for the BLE characteristic
-#define CHARACTERISTIC_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
+// UUID for the BLE characteristics
+#define CHARACTERISTIC_SERVICE_NAME_UUID "10000000-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TITLE_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXTVIEW_UUID "10000002-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_STRING_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID  "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -44,23 +47,22 @@ void setup() {
 
     // Create a BLE service with a predefined UUID
     BLEService *pService = pServer->createService(SERVICE_UUID);
-
-    // Create a BLE characteristic with read and notify properties
-    BLECharacteristic *pCharacteristic = pService->createCharacteristic(
-                                         CHARACTERISTIC_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_NOTIFY
+    //IF YOU ADD OR REMOVE CHARACTERISTIC FORGOT DEVICE IN BLUEETOTH AND BONDING AGAIN IS SOMETIMES NEEDED IN ANDROID TO TAKE EFFECT.
+    // Create a BLE characteristic
+    BLECharacteristic *pCharacteristicServiceName = pService->createCharacteristic(
+                                         CHARACTERISTIC_SERVICE_NAME_UUID,
+                                         BLECharacteristic::PROPERTY_READ
                                        );
 
-    pCharacteristic->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    pCharacteristicServiceName->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
 
     // Add a custom descriptor used by the Minglee app
     // Only one descriptor matching the mask is supported for each characteristic.
     // If a characteristic contains multiple descriptors matching the mask, a descriptor may be selected randomly.
-    BLEDescriptor *customDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+    BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     //Set control configuration
     //JSON format. Keys are case-sensitive.
-    customDescriptor->setValue(
+    serviceNameDescriptor->setValue(
       // The value of this characteristic will be displayed as the service name.
       // The order value determines the order in which the service will be displayed in the Minglee app.
       // Only one serviceName characteristic is supported for each service.
@@ -68,10 +70,56 @@ void setup() {
       R"({"type":"serviceName", "order":1})"
     );
   
-    pCharacteristic->addDescriptor(customDescriptor);
+    pCharacteristicServiceName->addDescriptor(serviceNameDescriptor);
 
     // Set an initial value for the characteristic
-    pCharacteristic->setValue("Service 1");
+    pCharacteristicServiceName->setValue("Service 1");
+
+    ////CONTROLS///
+    //Title is readonly large text
+    BLECharacteristic *pCharacteristicTitle = pService->createCharacteristic(
+                                         CHARACTERISTIC_TITLE_UUID,
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_NOTIFY
+                                       );
+    pCharacteristicTitle->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    BLEDescriptor *titleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+    titleDescriptor->setValue(
+      R"({"type":"title", "order":1, disabled:false})" //Control is always readonly. Disabled has only visual effect
+    );
+    pCharacteristicTitle->addDescriptor(titleDescriptor);
+    pCharacteristicTitle->setValue("This is large text");
+
+    //TextView is readonly regular size Text
+    BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
+                                         CHARACTERISTIC_TEXTVIEW_UUID,
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_NOTIFY
+                                       );
+    pCharacteristicTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+    textViewDescriptor->setValue(
+      R"({"type":"textView", "order":2, disabled:false})" //Control is always readonly. Disabled has only visual effect
+    );
+    pCharacteristicTextView->addDescriptor(textViewDescriptor);
+    pCharacteristicTextView->setValue("This is readonly text");
+
+    //String is editable control for string characteristic
+    //UTF-8 encoding is supported
+    //Characteristic is not writeable. Setting of dissable property doesn not take effect, controll will be always disabled.
+    BLECharacteristic *pCharacteristicString = pService->createCharacteristic(
+                                         CHARACTERISTIC_STRING_UUID,
+                                         //READONLY characteristic
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_NOTIFY
+                                       );
+    pCharacteristicString->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    BLEDescriptor *stringDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+    stringDescriptor->setValue(
+      R"({"type":"string", "order":2})" //R"({"type":"textView", "order":2, disabled:false})" Disabled setting has no effect in this example, can be skipped.
+    );
+    pCharacteristicString->addDescriptor(stringDescriptor);
+    pCharacteristicString->setValue("This is string");
 
     // Start the BLE service
     pService->start();
