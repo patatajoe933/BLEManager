@@ -9,7 +9,7 @@
 #define CHARACTERISTIC_SERVICE_NAME_UUID "10000000-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_TITLE_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_TEXTVIEW_UUID "10000002-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_STRING_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXTFIELD_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID  "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -109,22 +109,22 @@ void setup() {
     pCharacteristicTextView->addDescriptor(textViewDescriptor);
     pCharacteristicTextView->setValue("This is read-only text");
 
-    // String: editable control for string characteristics
+    // TextField: editable control for string characteristics
     // Supports UTF-8 encoding
     // The characteristic is not writable. Setting the "disabled" property has no effect, control will always be disabled.
-    BLECharacteristic *pCharacteristicString = pService->createCharacteristic(
-                                         CHARACTERISTIC_STRING_UUID,
+    BLECharacteristic *pCharacteristicTextField = pService->createCharacteristic(
+                                         CHARACTERISTIC_TEXTFIELD_UUID,
                                          // Read-only characteristic
                                          BLECharacteristic::PROPERTY_READ |
                                          BLECharacteristic::PROPERTY_NOTIFY
                                        );
-    pCharacteristicString->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
-    BLEDescriptor *stringDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
-    stringDescriptor->setValue(
-      R"({"type":"string", "order":2})" // Setting "disabled" has no effect in this example, can be skipped.
+    pCharacteristicTextField->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    BLEDescriptor *textFieldDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+    textFieldDescriptor->setValue(
+      R"({"type":"textField", "order":2})" // Setting "disabled" has no effect in this example, can be skipped.
     );
-    pCharacteristicString->addDescriptor(stringDescriptor);
-    pCharacteristicString->setValue("This is a string");
+    pCharacteristicTextField->addDescriptor(textFieldDescriptor);
+    pCharacteristicTextField->setValue("This is a TextField");
 
     // Start the BLE service
     pService->start();
