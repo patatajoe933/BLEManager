@@ -121,7 +121,7 @@ void setup() {
     pCharacteristicTextField->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *textFieldDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     textFieldDescriptor->setValue(
-      R"({"type":"textField", "order":2})" // Setting "disabled" has no effect in this example, can be skipped.
+      R"({"type":"textField", "order":3})" // Setting "disabled" has no effect in this example, can be skipped.
     );
     pCharacteristicTextField->addDescriptor(textFieldDescriptor);
     pCharacteristicTextField->setValue("This is a TextField");
