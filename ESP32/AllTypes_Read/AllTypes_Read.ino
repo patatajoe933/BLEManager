@@ -26,7 +26,7 @@ class ServerCallbacks : public BLEServerCallbacks {
         BLEDevice::startAdvertising();
     }
 };
-
+BLECharacteristic *testCharacteristic = NULL;
 void setup() {
     Serial.begin(115200);
 
@@ -46,7 +46,8 @@ void setup() {
     pServer->setCallbacks(new ServerCallbacks());
 
     // Create a BLE service with a predefined UUID
-    BLEService *pService = pServer->createService(SERVICE_UUID);
+    // Service handles by default 15 handles. Each BLE Characteristic takes 2 handles and each BLE Descriptor takes 1 handle.
+    BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32); //32 handlers
     // If you add or remove characteristics, it may be necessary to forget the device
     // in the Bluetooth settings and re-pair it on Android for changes to take effect.
 
@@ -85,13 +86,14 @@ void setup() {
     BLECharacteristic *pCharacteristicTitle = pService->createCharacteristic(
                                          CHARACTERISTIC_TITLE_UUID,
                                          BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_NOTIFY
+                                         BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTitle->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *titleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     titleDescriptor->setValue(
       R"({"type":"title", "order":1, "disabled":false})" // Control is always read-only. "Disabled" has only a visual effect.
     );
+
     pCharacteristicTitle->addDescriptor(titleDescriptor);
     pCharacteristicTitle->setValue("This is large text");
 
@@ -99,13 +101,14 @@ void setup() {
     BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
                                          CHARACTERISTIC_TEXTVIEW_UUID,
                                          BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_NOTIFY
+                                         BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     textViewDescriptor->setValue(
       R"({"type":"textView", "order":2, "disabled":false})" // Control is always read-only. "Disabled" has only a visual effect.
     );
+
     pCharacteristicTextView->addDescriptor(textViewDescriptor);
     pCharacteristicTextView->setValue("This is read-only text");
 
@@ -116,16 +119,21 @@ void setup() {
                                          CHARACTERISTIC_TEXTFIELD_UUID,
                                          // Read-only characteristic
                                          BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_NOTIFY
+                                         BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTextField->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *textFieldDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     textFieldDescriptor->setValue(
       R"({"type":"textField", "order":3})" // Setting "disabled" has no effect in this example, can be skipped.
     );
+
     pCharacteristicTextField->addDescriptor(textFieldDescriptor);
     pCharacteristicTextField->setValue("This is a TextField");
 
+    ////NOTIFY TEST////
+    testCharacteristic = pCharacteristicTitle;
+    testCharacteristic->addDescriptor(new BLE2902());
+    /////
     // Start the BLE service
     pService->start();
 
@@ -138,6 +146,12 @@ void setup() {
     Serial.println("BLE server is running and advertising...");
 }
 
+int counter = 0;
 void loop() {
     // Empty loop since BLE server runs in the background
+    //NOTIFY TEST
+    delay(5000);
+    testCharacteristic->setValue(String(counter++));
+    testCharacteristic->indicate();
+    ///////////
 }
