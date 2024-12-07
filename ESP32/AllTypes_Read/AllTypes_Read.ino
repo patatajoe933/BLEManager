@@ -85,8 +85,8 @@ void setup() {
     // Title: read-only large text
     BLECharacteristic *pCharacteristicTitle = pService->createCharacteristic(
                                          CHARACTERISTIC_TITLE_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_INDICATE
+                                         BLECharacteristic::PROPERTY_READ
+                                         | BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTitle->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *titleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
@@ -100,8 +100,8 @@ void setup() {
     // TextView: read-only regular-sized text
     BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
                                          CHARACTERISTIC_TEXTVIEW_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_INDICATE
+                                         BLECharacteristic::PROPERTY_READ
+                                        //| BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
@@ -114,17 +114,17 @@ void setup() {
 
     // TextField: editable control for string characteristics
     // Supports UTF-8 encoding
-    // The characteristic is not writable. Setting the "disabled" property has no effect, control will always be disabled.
+    // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
     BLECharacteristic *pCharacteristicTextField = pService->createCharacteristic(
                                          CHARACTERISTIC_TEXTFIELD_UUID,
                                          // Read-only characteristic
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_INDICATE
+                                         BLECharacteristic::PROPERTY_READ
+                                         //| BLECharacteristic::PROPERTY_INDICATE
                                        );
     pCharacteristicTextField->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
     BLEDescriptor *textFieldDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
     textFieldDescriptor->setValue(
-      R"({"type":"textField", "order":3})" // Setting "disabled" has no effect in this example, can be skipped.
+      R"({"type":"textField", "order":3, "disabled":false})"
     );
 
     pCharacteristicTextField->addDescriptor(textFieldDescriptor);
