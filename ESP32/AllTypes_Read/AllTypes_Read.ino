@@ -86,25 +86,25 @@ void setup() {
   pCharacteristicServiceName->addDescriptor(serviceNameDescriptor);
 
   // Set an initial value for the characteristic
-  pCharacteristicServiceName->setValue("Service 1");
+  pCharacteristicServiceName->setValue("Texts");
 
   //// CONTROLS ////
   // If you add or remove characteristics, it may be necessary to forget the device
   // in the Bluetooth settings and re-pair it on Android for changes to take effect.
 
   // Title: read-only large text
-  BLECharacteristic *pCharacteristicTitle = pService->createCharacteristic(
+  BLECharacteristic *pCharacteristicTitleView = pService->createCharacteristic(
     CHARACTERISTIC_TITLE_UUID,
     BLECharacteristic::PROPERTY_READ
       | BLECharacteristic::PROPERTY_INDICATE);
-  pCharacteristicTitle->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
-  BLEDescriptor *titleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
-  titleDescriptor->setValue(
-    R"({"type":"title", "order":1, "disabled":false})"  // Control is always read-only. "Disabled" has only a visual effect.
+  pCharacteristicTitleView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+  BLEDescriptor *titleViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  titleViewDescriptor->setValue(
+    R"({"type":"titleView", "order":1, "disabled":false})"  // Control is always read-only. "Disabled" has only a visual effect.
   );
 
-  pCharacteristicTitle->addDescriptor(titleDescriptor);
-  pCharacteristicTitle->setValue("This is large text");
+  pCharacteristicTitleView->addDescriptor(titleViewDescriptor);
+  pCharacteristicTitleView->setValue("This is large text");
 
   // TextView: read-only regular-sized text
   BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
@@ -124,23 +124,23 @@ void setup() {
   // TextField: editable control for string characteristics
   // Supports UTF-8 encoding
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
-  BLECharacteristic *pCharacteristicTextField = pService->createCharacteristic(
+  BLECharacteristic *pCharacteristicText = pService->createCharacteristic(
     CHARACTERISTIC_TEXTFIELD_UUID,
     // Read-only characteristic
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE  //otestovat zápis bez oprávnění
     //| BLECharacteristic::PROPERTY_INDICATE
   );
-  pCharacteristicTextField->setCallbacks(new CharacteristicCallbacks());
-  pCharacteristicTextField->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
-  BLEDescriptor *textFieldDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
-  textFieldDescriptor->setValue(
-    R"({"type":"textField", "order":3, "disabled":false})");
+  pCharacteristicText->setCallbacks(new CharacteristicCallbacks());
+  pCharacteristicText->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+  BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  textDescriptor->setValue(
+    R"({"type":"text", "order":3, "disabled":false})");
 
-  pCharacteristicTextField->addDescriptor(textFieldDescriptor);
-  pCharacteristicTextField->setValue("This is a TextField");
+  pCharacteristicText->addDescriptor(textDescriptor);
+  pCharacteristicText->setValue("This is a Text Field");
 
   ////NOTIFY TEST////
-  testCharacteristic = pCharacteristicTitle;
+  testCharacteristic = pCharacteristicTitleView;
   testCharacteristic->addDescriptor(new BLE2902());
   /////
   // Start the BLE service
