@@ -7,9 +7,10 @@
 #define SERVICE_UUID "00000001-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
 #define CHARACTERISTIC_SERVICE_NAME_UUID "10000000-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TITLE_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXTVIEW_UUID "10000002-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXTFIELD_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TITLE_VIEW_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_VIEW_UUID "10000002-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_PASSWORD_UUID "10000004-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -27,7 +28,7 @@ class ServerCallbacks : public BLEServerCallbacks {
   }
 };
 
-class CharacteristicCallbacks : public BLECharacteristicCallbacks {
+class StringCharacteristicCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) override {
     String value = pCharacteristic->getValue();
 
@@ -94,7 +95,7 @@ void setup() {
 
   // Title: read-only large text
   BLECharacteristic *pCharacteristicTitleView = pService->createCharacteristic(
-    CHARACTERISTIC_TITLE_UUID,
+    CHARACTERISTIC_TITLE_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
       | BLECharacteristic::PROPERTY_INDICATE);
   pCharacteristicTitleView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
@@ -104,11 +105,11 @@ void setup() {
   );
 
   pCharacteristicTitleView->addDescriptor(titleViewDescriptor);
-  pCharacteristicTitleView->setValue("This is large text");
+  pCharacteristicTitleView->setValue("Large read-only text");
 
   // TextView: read-only regular-sized text
   BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
-    CHARACTERISTIC_TEXTVIEW_UUID,
+    CHARACTERISTIC_TEXT_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
     //| BLECharacteristic::PROPERTY_INDICATE
   );
@@ -119,25 +120,43 @@ void setup() {
   );
 
   pCharacteristicTextView->addDescriptor(textViewDescriptor);
-  pCharacteristicTextView->setValue("This is read-only text");
+  pCharacteristicTextView->setValue("Read-only text");
 
-  // TextField: editable control for string characteristics
+  // Text field: editable control for string characteristics
   // Supports UTF-8 encoding
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicText = pService->createCharacteristic(
-    CHARACTERISTIC_TEXTFIELD_UUID,
-    // Read-only characteristic
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE  //otestovat zápis bez oprávnění
+    CHARACTERISTIC_TEXT_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
     //| BLECharacteristic::PROPERTY_INDICATE
   );
-  pCharacteristicText->setCallbacks(new CharacteristicCallbacks());
+  pCharacteristicText->setCallbacks(new StringCharacteristicCallbacks());
   pCharacteristicText->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
   BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
   textDescriptor->setValue(
-    R"({"type":"text", "order":3, "disabled":false})");
+    R"({"type":"text", "order":3, "disabled":false, label:"Text Field Label"})");
 
   pCharacteristicText->addDescriptor(textDescriptor);
-  pCharacteristicText->setValue("This is a Text Field");
+  pCharacteristicText->setValue("Text value");
+
+  // Password field: editable control for string characteristics
+  // Supports UTF-8 encoding
+  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
+  BLECharacteristic *pCharacteristicPassword = pService->createCharacteristic(
+    CHARACTERISTIC_PASSWORD_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
+    //| BLECharacteristic::PROPERTY_INDICATE
+  );
+
+  pCharacteristicPassword->setCallbacks(new StringCharacteristicCallbacks());
+  pCharacteristicPassword->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+  BLEDescriptor *passwordDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  passwordDescriptor->setValue(
+    R"({"type":"password", "order":4, "disabled":false, label:"Pasword Field Label"})");
+
+  pCharacteristicPassword->addDescriptor(passwordDescriptor);
+  pCharacteristicPassword->setValue("");
+
 
   ////NOTIFY TEST////
   testCharacteristic = pCharacteristicTitleView;
