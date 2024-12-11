@@ -4,16 +4,17 @@
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID "00000001-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID                      "00000001-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID "10000000-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TITLE_VIEW_UUID "10000001-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXT_VIEW_UUID "10000002-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXT_UUID "10000003-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_PASSWORD_UUID "10000004-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID  "10000000-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TITLE_VIEW_UUID    "10000001-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_VIEW_UUID     "10000002-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_UUID          "10000003-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_PASSWORD_UUID      "10000004-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_PIN_UUID           "10000005-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
-#define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
+#define CUSTOM_DESCRIPTOR_UUID            "2000face-74ee-43ce-86b2-0dde20dcefd6"
 
 // Custom server callback class to handle connection events
 class ServerCallbacks : public BLEServerCallbacks {
@@ -31,9 +32,8 @@ class ServerCallbacks : public BLEServerCallbacks {
 class StringCharacteristicCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) override {
     String value = pCharacteristic->getValue();
-
+    Serial.print("Received value: ");
     if (!value.isEmpty()) {
-      Serial.print("Received value: ");
       Serial.println(value.c_str());
     }
   }
@@ -97,7 +97,8 @@ void setup() {
   BLECharacteristic *pCharacteristicTitleView = pService->createCharacteristic(
     CHARACTERISTIC_TITLE_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
-      | BLECharacteristic::PROPERTY_INDICATE);
+    //| BLECharacteristic::PROPERTY_INDICATE
+  );
   pCharacteristicTitleView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
   BLEDescriptor *titleViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
   titleViewDescriptor->setValue(
@@ -139,7 +140,7 @@ void setup() {
   pCharacteristicText->addDescriptor(textDescriptor);
   pCharacteristicText->setValue("Text value");
 
-  // Password field: editable control for string characteristics
+  // Password field: editable control password string characteristics
   // Supports UTF-8 encoding
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicPassword = pService->createCharacteristic(
@@ -158,9 +159,26 @@ void setup() {
   pCharacteristicPassword->setValue("");
 
 
+  // PIN field: editable control PIN string characteristics
+  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
+  BLECharacteristic *pCharacteristicPIN = pService->createCharacteristic(
+    CHARACTERISTIC_PIN_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
+    //| BLECharacteristic::PROPERTY_INDICATE
+  );
+
+  pCharacteristicPIN->setCallbacks(new StringCharacteristicCallbacks());
+  pCharacteristicPIN->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+  BLEDescriptor *pinDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  pinDescriptor->setValue(
+    R"({"type":"pin", "order":5, "disabled":false, label:"PIN Field Label"})");
+
+  pCharacteristicPIN->addDescriptor(pinDescriptor);
+  pCharacteristicPIN->setValue("");
+
   ////NOTIFY TEST////
-  testCharacteristic = pCharacteristicTitleView;
-  testCharacteristic->addDescriptor(new BLE2902());
+  //testCharacteristic = pCharacteristicTitleView;
+  //testCharacteristic->addDescriptor(new BLE2902());
   /////
   // Start the BLE service
   pService->start();
@@ -178,8 +196,8 @@ int counter = 0;
 void loop() {
   // Empty loop since BLE server runs in the background
   //NOTIFY TEST
-  delay(5000);
+  /*delay(5000);
   testCharacteristic->setValue(String(counter++));
-  testCharacteristic->indicate();
+  testCharacteristic->indicate();*/
   ///////////
 }
