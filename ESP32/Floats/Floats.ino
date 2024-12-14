@@ -132,7 +132,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *halfDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   halfDescriptor->setValue(
-    R"({"type":"half", "order":1, "disabled":false, label:"Float 16"})");
+    R"({"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10})");
 
   pCharacteristicHalf->addDescriptor(halfDescriptor);
   uint16_t h = 0x46E6; //0x3555; //0.33325195  0x45CC 6.9
@@ -148,7 +148,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *floatDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   floatDescriptor->setValue(
-    R"({"type":"float", "order":2, "disabled":false, label:"Float 32"})");
+    R"({"type":"float", "order":2, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20})");
 
   pCharacteristicFloat->addDescriptor(floatDescriptor);
   
@@ -165,7 +165,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *doubleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   doubleDescriptor->setValue(
-    R"({"type":"double", "order":3, "disabled":false, label:"Float 64"})");
+    R"({"type":"double", "order":3, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30})");
 
   pCharacteristicDouble->addDescriptor(doubleDescriptor);
   
