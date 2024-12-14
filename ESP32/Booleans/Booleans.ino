@@ -4,7 +4,7 @@
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID                      "00000011-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID                      "00000010-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
 #define CHARACTERISTIC_SERVICE_NAME_UUID  "10000010-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_CHECK_UUID         "10000011-74ee-43ce-86b2-0dde20dcefd6"
@@ -66,12 +66,12 @@ void setup() {
   BLECharacteristic *pCharacteristicServiceName = pService->createCharacteristic(
     CHARACTERISTIC_SERVICE_NAME_UUID,
     BLECharacteristic::PROPERTY_READ);
-  pCharacteristicServiceName->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
 
   // Add a custom descriptor used by the Minglee app
   // Only one descriptor matching the mask is supported per characteristic.
   // If multiple descriptors match, one may be selected randomly.
-  BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   // Set control configuration
   // JSON format. Keys are case-sensitive.
   serviceNameDescriptor->setValue(
@@ -94,7 +94,8 @@ void setup() {
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
   );
   pCharacteristicCheck->setCallbacks(new BooleanCharacteristicCallbacks());
-  BLEDescriptor *checkDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *checkDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   checkDescriptor->setValue(
     R"({"type":"check", "order":1, "disabled":false, label:"Checkbox"})");
 
@@ -110,7 +111,8 @@ void setup() {
   );
 
   pCharacteristicSwitch->setCallbacks(new BooleanCharacteristicCallbacks());
-  BLEDescriptor *switchDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *switchDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   switchDescriptor->setValue(
     R"({"type":"switch", "order":2, "disabled":false, label:"Switch"})");
 

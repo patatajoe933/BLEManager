@@ -4,7 +4,7 @@
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID                      "00000001-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID                      "00000000-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
 #define CHARACTERISTIC_SERVICE_NAME_UUID  "10000000-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_TITLE_VIEW_UUID    "10000001-74ee-43ce-86b2-0dde20dcefd6"
@@ -78,7 +78,8 @@ void setup() {
   // Add a custom descriptor used by the Minglee app
   // Only one descriptor matching the mask is supported per characteristic.
   // If multiple descriptors match, one may be selected randomly.
-  BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   // Set control configuration
   // JSON format. Keys are case-sensitive.
   serviceNameDescriptor->setValue(
@@ -100,7 +101,8 @@ void setup() {
     //| BLECharacteristic::PROPERTY_INDICATE
   );
   pCharacteristicTitleView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
-  BLEDescriptor *titleViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *titleViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   titleViewDescriptor->setValue(
     R"({"type":"titleView", "order":1, "disabled":false})"  // Control is always read-only. "Disabled" has only a visual effect.
   );
@@ -115,7 +117,8 @@ void setup() {
     //| BLECharacteristic::PROPERTY_INDICATE
   );
   pCharacteristicTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
-  BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textViewDescriptor->setValue(
     R"({"type":"textView", "order":2, "disabled":false})"  // Control is always read-only. "Disabled" has only a visual effect.
   );
@@ -133,7 +136,8 @@ void setup() {
   );
   pCharacteristicText->setCallbacks(new StringCharacteristicCallbacks());
   pCharacteristicText->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
-  BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textDescriptor->setValue(
     R"({"type":"text", "order":3, "disabled":false, label:"Text Field Label"})");
 
@@ -151,7 +155,8 @@ void setup() {
 
   pCharacteristicPassword->setCallbacks(new StringCharacteristicCallbacks());
   pCharacteristicPassword->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
-  BLEDescriptor *passwordDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *passwordDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   passwordDescriptor->setValue(
     R"({"type":"password", "order":4, "disabled":false, label:"Pasword Field Label"})");
 
@@ -169,7 +174,8 @@ void setup() {
 
   pCharacteristicPIN->setCallbacks(new StringCharacteristicCallbacks());
   pCharacteristicPIN->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
-  BLEDescriptor *pinDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *pinDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   pinDescriptor->setValue(
     R"({"type":"pin", "order":5, "disabled":false, label:"PIN Field Label"})");
 
