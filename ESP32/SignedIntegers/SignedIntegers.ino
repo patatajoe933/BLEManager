@@ -134,7 +134,7 @@ void setup() {
    //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt16Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt16Descriptor->setValue(
-    R"({"type":"sint16", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070})");
+    R"({"type":"sint16", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070})");
   pCharacteristicSInt16->addDescriptor(sInt16Descriptor);
   int16_t sint16 = -6969;
   pCharacteristicSInt16->setValue((uint8_t *)&sint16, sizeof(int16_t));
@@ -148,7 +148,7 @@ void setup() {
    //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt32Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt32Descriptor->setValue(
-    R"({"type":"sint32", "order":2, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070})");
+    R"({"type":"sint32", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070})");
   pCharacteristicSInt32->addDescriptor(sInt32Descriptor);
   int32_t sint32 = -696969;
   pCharacteristicSInt32->setValue((uint8_t *)&sint32, sizeof(int32_t));
@@ -162,7 +162,7 @@ void setup() {
    //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt64Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt64Descriptor->setValue(
-    R"({"type":"sint64", "order":3, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070})");
+    R"({"type":"sint64", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070})");
   pCharacteristicSInt64->addDescriptor(sInt64Descriptor);
   int64_t sint64 = -6969696969;
   pCharacteristicSInt64->setValue((uint8_t *)&sint64, sizeof(int64_t));
