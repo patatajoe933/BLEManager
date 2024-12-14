@@ -3,6 +3,10 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 
+/*
+ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order before transmission.
+*/
+
 #define BYTESWAP16(x) static_cast<int16_t>(((x & 0xFF) << 8) | ((x >> 8) & 0xFF))
 #define BYTESWAP32(x) static_cast<int32_t>(((x & 0xFF) << 24) | ((x >> 8) & 0xFF) << 16 | ((x >> 16) & 0xFF) << 8 | ((x >> 24) & 0xFF))
 #define BYTESWAP64(x) static_cast<int64_t>(((x & 0xFF) << 56) | ((x >> 8) & 0xFF) << 48 | ((x >> 16) & 0xFF) << 40 | ((x >> 24) & 0xFF) << 32 | ((x >> 32) & 0xFF) << 24 | ((x >> 40) & 0xFF) << 16 | ((x >> 48) & 0xFF) << 8 | ((x >> 56) & 0xFF))

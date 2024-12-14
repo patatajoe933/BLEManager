@@ -3,6 +3,10 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 
+/*
+ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order before transmission.
+*/
+
 // UUID for the BLE service
 #define SERVICE_UUID "00000060-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
@@ -13,6 +17,28 @@
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
+
+float byteswap32(float x) {
+  uint32_t temp;
+  memcpy(&temp, &x, sizeof(temp));
+
+  temp = ((temp & 0xFF) << 24) | ((temp >> 8 & 0xFF) << 16) | ((temp >> 16 & 0xFF) << 8) | ((temp >> 24 & 0xFF));
+
+  float result;
+  memcpy(&result, &temp, sizeof(result));
+  return result;
+}
+
+double byteswap64(double x) {
+  uint64_t temp;
+  memcpy(&temp, &x, sizeof(temp));
+
+  temp = ((temp & 0xFF) << 56) | ((temp >> 8 & 0xFF) << 48) | ((temp >> 16 & 0xFF) << 40) | ((temp >> 24 & 0xFF) << 32) | ((temp >> 32 & 0xFF) << 24) | ((temp >> 40 & 0xFF) << 16) | ((temp >> 48 & 0xFF) << 8) | ((temp >> 56 & 0xFF));
+
+  double result;
+  memcpy(&result, &temp, sizeof(result));
+  return result;
+}
 
 // Custom server callback class to handle connection events
 class ServerCallbacks : public BLEServerCallbacks {
@@ -27,6 +53,7 @@ class ServerCallbacks : public BLEServerCallbacks {
   }
 };
 
+//Big Endian
 class FloatCharacteristicCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) override {
     const uint8_t *data = pCharacteristic->getData();
@@ -36,16 +63,18 @@ class FloatCharacteristicCallbacks : public BLECharacteristicCallbacks {
 
     if (dataLength > 0) {
       if (dataLength == 2) {  // 16-bit halfFloat
-        uint16_t halfValue = data[0] | (data[1] << 8);
+        uint16_t halfValue = (data[0] << 8) | data[1];
         float floatValue = halfToFloat(halfValue);  //halfFloat -> float
         Serial.println(floatValue);
       } else if (dataLength == 4) {  // 32-bit Float
+        uint32_t intValue = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
         float floatValue;
-        memcpy(&floatValue, data, sizeof(float));
+        memcpy(&floatValue, &intValue, sizeof(float));
         Serial.println(floatValue);
       } else if (dataLength == 8) {  // 64-bit Double
+        uint64_t intValue = (static_cast<uint64_t>(data[0]) << 56) | (static_cast<uint64_t>(data[1]) << 48) | (static_cast<uint64_t>(data[2]) << 40) | (static_cast<uint64_t>(data[3]) << 32) | (static_cast<uint64_t>(data[4]) << 24) | (static_cast<uint64_t>(data[5]) << 16) | (static_cast<uint64_t>(data[6]) << 8) | static_cast<uint64_t>(data[7]);
         double doubleValue;
-        memcpy(&doubleValue, data, sizeof(double));
+        memcpy(&doubleValue, &intValue, sizeof(double));
         Serial.println(doubleValue);
       } else {
         Serial.println("Invalid data length for floating-point value!");
@@ -114,7 +143,7 @@ void setup() {
   pCharacteristicServiceName->addDescriptor(serviceNameDescriptor);
 
   // Set an initial value for the characteristic
-  pCharacteristicServiceName->setValue("Floats");
+  pCharacteristicServiceName->setValue("Big Endian Floats");
 
   //// CONTROLS ////
   // If you add or remove characteristics, it may be necessary to forget the device (if paired)
@@ -130,10 +159,10 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *halfDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   halfDescriptor->setValue(
-    R"({"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10})");
+    R"({"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10})");
 
   pCharacteristicHalf->addDescriptor(halfDescriptor);
-  uint16_t h = 0x46E6;
+  uint16_t h = 0xE646;
   pCharacteristicHalf->setValue((uint8_t *)&h, sizeof(uint16_t));
 
   // Float: editable control for float32 characteristics
@@ -146,11 +175,11 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *floatDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   floatDescriptor->setValue(
-    R"({"type":"float", "order":2, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20})");
+    R"({"type":"floatbe", "order":2, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20})");
 
   pCharacteristicFloat->addDescriptor(floatDescriptor);
-  
-  float f = 6.9;
+
+  float f = byteswap32(6.9);
   pCharacteristicFloat->setValue(f);
 
   // Double: editable control for float64 characteristics
@@ -163,11 +192,11 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *doubleDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   doubleDescriptor->setValue(
-    R"({"type":"double", "order":3, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30})");
+    R"({"type":"doublebe", "order":3, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30})");
 
   pCharacteristicDouble->addDescriptor(doubleDescriptor);
-  
-  double d = 6.9;
+
+  double d = byteswap64(6.9);
   pCharacteristicDouble->setValue(d);
 
   // Start the BLE service
