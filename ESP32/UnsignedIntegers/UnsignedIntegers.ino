@@ -36,27 +36,39 @@ class UnsignedIntegerCharacteristicCallbacks : public BLECharacteristicCallbacks
     Serial.print("Received value: ");
 
     if (dataLength > 0) {
-      uint64_t intValue = 0;
-
       switch (dataLength) {
-        case 1:  // 8-bit unsigned integer
-          intValue = static_cast<uint8_t>(data[0]);
+        case sizeof(uint8_t):  // 8-bit unsigned integer
+          {
+            uint8_t intValue;
+            memcpy(&intValue, data, sizeof(uint8_t));
+            Serial.println(intValue);
+          }
           break;
-        case 2:  // 16-bit unsigned integer
-          intValue = static_cast<uint16_t>(data[0] | (data[1] << 8));
+        case sizeof(uint16_t):  // 16-bit unsigned integer
+          {
+            uint16_t intValue;
+            memcpy(&intValue, data, sizeof(uint16_t));
+            Serial.println(intValue);
+          }
           break;
-        case 4:  // 32-bit unsigned integer
-          intValue = static_cast<uint32_t>(data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24));
+        case sizeof(uint32_t):  // 32-bit unsigned integer
+          {
+            uint32_t intValue;
+            memcpy(&intValue, data, sizeof(uint32_t));
+            Serial.println(intValue);
+          }
           break;
-        case 8:  // 64-bit unsigned integer
-          intValue = static_cast<uint64_t>(data[0] | (uint64_t(data[1]) << 8) | (uint64_t(data[2]) << 16) | (uint64_t(data[3]) << 24) | (uint64_t(data[4]) << 32) | (uint64_t(data[5]) << 40) | (uint64_t(data[6]) << 48) | (uint64_t(data[7]) << 56));
+        case sizeof(uint64_t):  // 64-bit unsigned integer
+          {
+            uint64_t intValue;
+            memcpy(&intValue, data, sizeof(uint64_t));
+            Serial.println(intValue);
+          }
           break;
         default:
           Serial.println("Invalid data length!");
           return;
       }
-
-      Serial.println(intValue);
     } else {
       Serial.println("Empty value received!");
     }

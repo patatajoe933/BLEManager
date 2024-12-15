@@ -36,27 +36,39 @@ class IntegerCharacteristicCallbacks : public BLECharacteristicCallbacks {
     Serial.print("Received value: ");
 
     if (dataLength > 0) {
-      int64_t intValue = 0;
-
       switch (dataLength) {
-        case 1:  // 8-bit integer
-          intValue = static_cast<int8_t>(data[0]);
+        case sizeof(int8_t):  // 8-bit integer
+          {
+            int8_t intValue;
+            memcpy(&intValue, data, sizeof(int8_t));
+            Serial.println(intValue);
+          }
           break;
-        case 2:  // 16-bit integer
-          intValue = static_cast<int16_t>(data[0] | (data[1] << 8));
+        case sizeof(int16_t):  // 16-bit integer
+          {
+            int16_t intValue;
+            memcpy(&intValue, data, sizeof(int16_t));
+            Serial.println(intValue);
+          }
           break;
-        case 4:  // 32-bit integer
-          intValue = static_cast<int32_t>(data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24));
+        case sizeof(int32_t):  // 32-bit integer
+          {
+            int32_t intValue;
+            memcpy(&intValue, data, sizeof(int32_t));
+            Serial.println(intValue);
+          }
           break;
-        case 8:  // 64-bit integer
-          intValue = static_cast<int64_t>(data[0] | (uint64_t(data[1]) << 8) | (uint64_t(data[2]) << 16) | (uint64_t(data[3]) << 24) | (uint64_t(data[4]) << 32) | (uint64_t(data[5]) << 40) | (uint64_t(data[6]) << 48) | (uint64_t(data[7]) << 56));
+        case sizeof(int64_t):  // 64-bit integer
+          {
+            int64_t intValue;
+            memcpy(&intValue, data, sizeof(int64_t));
+            Serial.println(intValue);
+          }
           break;
         default:
           Serial.println("Invalid data length!");
           return;
       }
-
-      Serial.println(intValue);
     } else {
       Serial.println("Empty value received!");
     }
@@ -131,7 +143,7 @@ void setup() {
     CHARACTERISTIC_SINT16_UUID,  // Correct UUID for sint16
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
   pCharacteristicSInt16->setCallbacks(new IntegerCharacteristicCallbacks());
-   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt16Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt16Descriptor->setValue(
     R"({"type":"sint16", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070})");
@@ -145,7 +157,7 @@ void setup() {
     CHARACTERISTIC_SINT32_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
   pCharacteristicSInt32->setCallbacks(new IntegerCharacteristicCallbacks());
-   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt32Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt32Descriptor->setValue(
     R"({"type":"sint32", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070})");
@@ -159,7 +171,7 @@ void setup() {
     CHARACTERISTIC_SINT64_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
   pCharacteristicSInt64->setCallbacks(new IntegerCharacteristicCallbacks());
-   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt64Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt64Descriptor->setValue(
     R"({"type":"sint64", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070})");
