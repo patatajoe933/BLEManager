@@ -4,7 +4,7 @@
 #include <BLE2902.h>
 
 /*
-ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order before transmission.
+ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order.
 */
 
 #define BYTESWAP16(x) static_cast<int16_t>(((x & 0xFF) << 8) | ((x >> 8) & 0xFF))
@@ -148,7 +148,8 @@ void setup() {
   sInt16Descriptor->setValue(
     R"({"type":"sint16be", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070})");
   pCharacteristicSInt16->addDescriptor(sInt16Descriptor);
-  int16_t sint16 = BYTESWAP16(-6969);
+  int16_t sint16 = -6969;
+  sint16 = BYTESWAP16(sint16);
   pCharacteristicSInt16->setValue((uint8_t *)&sint16, sizeof(int16_t));
 
   // sint32: Editable control for signed int32 characteristics
@@ -162,7 +163,8 @@ void setup() {
   sInt32Descriptor->setValue(
     R"({"type":"sint32be", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070})");
   pCharacteristicSInt32->addDescriptor(sInt32Descriptor);
-  int32_t sint32 = BYTESWAP32(-696969);
+  int32_t sint32 = -696969;
+  sint32 = BYTESWAP32(sint32);
   pCharacteristicSInt32->setValue((uint8_t *)&sint32, sizeof(int32_t));
 
   // sint64: Editable control for signed int64 characteristics
@@ -176,7 +178,8 @@ void setup() {
   sInt64Descriptor->setValue(
     R"({"type":"sint64be", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070})");
   pCharacteristicSInt64->addDescriptor(sInt64Descriptor);
-  int64_t sint64 = BYTESWAP64(-6969696969);
+  int64_t sint64 = -6969696969;
+  sint64 = BYTESWAP64(sint64);
   pCharacteristicSInt64->setValue((uint8_t *)&sint64, sizeof(int64_t));
 
   // Start the BLE service

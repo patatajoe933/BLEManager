@@ -4,12 +4,12 @@
 #include <BLE2902.h>
 
 /*
-ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order before transmission.
+ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order.
 */
 
-#define BYTESWAP16(x) static_cast<int16_t>(((x & 0xFF) << 8) | ((x >> 8) & 0xFF))
-#define BYTESWAP32(x) static_cast<int32_t>(((x & 0xFF) << 24) | ((x >> 8) & 0xFF) << 16 | ((x >> 16) & 0xFF) << 8 | ((x >> 24) & 0xFF))
-#define BYTESWAP64(x) static_cast<int64_t>(((x & 0xFF) << 56) | ((x >> 8) & 0xFF) << 48 | ((x >> 16) & 0xFF) << 40 | ((x >> 24) & 0xFF) << 32 | ((x >> 32) & 0xFF) << 24 | ((x >> 40) & 0xFF) << 16 | ((x >> 48) & 0xFF) << 8 | ((x >> 56) & 0xFF))
+#define BYTESWAP16(x) static_cast<uint16_t>(((x & 0xFF) << 8) | ((x >> 8) & 0xFF))
+#define BYTESWAP32(x) static_cast<uint32_t>(((x & 0xFF) << 24) | ((x >> 8) & 0xFF) << 16 | ((x >> 16) & 0xFF) << 8 | ((x >> 24) & 0xFF))
+#define BYTESWAP64(x) static_cast<uint64_t>(((x & 0xFF) << 56) | ((x >> 8) & 0xFF) << 48 | ((x >> 16) & 0xFF) << 40 | ((x >> 24) & 0xFF) << 32 | ((x >> 32) & 0xFF) << 24 | ((x >> 40) & 0xFF) << 16 | ((x >> 48) & 0xFF) << 8 | ((x >> 56) & 0xFF))
 
 // UUID for the BLE service
 #define SERVICE_UUID "00000050-74ee-43ce-86b2-0dde20dcefd6"
@@ -145,7 +145,8 @@ void setup() {
   uInt16Descriptor->setValue(
     R"({"type":"uint16be", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070})");
   pCharacteristicUInt16->addDescriptor(uInt16Descriptor);
-  uint16_t uint16 = BYTESWAP16(6969);
+  uint16_t uint16 = 6969;
+  uint16 = BYTESWAP16(uint16);
   pCharacteristicUInt16->setValue((uint8_t *)&uint16, sizeof(uint16_t));
 
   // uint32: Editable control for unsigned int32 characteristics
@@ -159,7 +160,8 @@ void setup() {
   uInt32Descriptor->setValue(
     R"({"type":"uint32be", "order":3, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070})");
   pCharacteristicUInt32->addDescriptor(uInt32Descriptor);
-  uint32_t uint32 = BYTESWAP32(696969);
+  uint32_t uint32 = 696969;
+  uint32 = BYTESWAP32(uint32);
   pCharacteristicUInt32->setValue((uint8_t *)&uint32, sizeof(uint32_t));
 
   // uint64: Editable control for unsigned int64 characteristics
@@ -173,7 +175,8 @@ void setup() {
   uInt64Descriptor->setValue(
     R"({"type":"uint64be", "order":4, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070})");
   pCharacteristicUInt64->addDescriptor(uInt64Descriptor);
-  uint64_t uint64 = BYTESWAP64(6969696969);
+  uint64_t uint64 = 6969696969;
+  uint64 = BYTESWAP64(uint64);
   pCharacteristicUInt64->setValue((uint8_t *)&uint64, sizeof(uint64_t));
 
   // Start the BLE service

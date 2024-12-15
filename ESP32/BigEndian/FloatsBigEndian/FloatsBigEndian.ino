@@ -4,7 +4,7 @@
 #include <BLE2902.h>
 
 /*
-ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order before transmission.
+ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte order, we must reverse the byte order.
 */
 
 // UUID for the BLE service
