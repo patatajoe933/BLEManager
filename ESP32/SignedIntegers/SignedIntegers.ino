@@ -67,7 +67,6 @@ class IntegerCharacteristicCallbacks : public BLECharacteristicCallbacks {
           break;
         default:
           Serial.println("Invalid data length!");
-          return;
       }
     } else {
       Serial.println("Empty value received!");

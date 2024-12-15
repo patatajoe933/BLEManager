@@ -63,7 +63,6 @@ class UnsignedIntegerCharacteristicCallbacks : public BLECharacteristicCallbacks
           break;
         default:
           Serial.println("Invalid data length!");
-          return;
       }
 
       Serial.println(intValue);

@@ -8,12 +8,12 @@ ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte ord
 */
 
 // UUID for the BLE service
-#define SERVICE_UUID "00000060-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID "00000070-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID "10000060-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_HALF_UUID "10000061-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_FLOAT_UUID "10000062-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_DOUBLE_UUID "10000063-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID "10000070-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_HALF_UUID "10000071-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_FLOAT_UUID "10000072-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_DOUBLE_UUID "10000073-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
