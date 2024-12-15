@@ -58,6 +58,22 @@ class DateTimeCharacteristicCallbacks : public BLECharacteristicCallbacks {
 void setup() {
   Serial.begin(115200);
 
+  struct tm dtm = {};
+  dtm.tm_year = 2025 - 1900;
+  dtm.tm_mon = 0;
+  dtm.tm_mday = 1;
+  dtm.tm_hour = 11;
+  dtm.tm_min = 59;
+  dtm.tm_sec = 0;
+
+  struct tm dt = {};
+  dt.tm_year = 2025 - 1900;
+  dt.tm_mon = 0;
+  dt.tm_mday = 1;
+  dt.tm_hour = 0;
+  dt.tm_min = 0;
+  dt.tm_sec = 0;
+
   // Initialize BLE device with a name
   BLEDevice::init("Minglee device");
 
@@ -130,7 +146,7 @@ void setup() {
   date32Descriptor->setValue(
     R"({"type":"date32", "order":2, "disabled":false, "label":"Date 32"})");
   pCharacteristicDate32->addDescriptor(date32Descriptor);
-  uint32_t date32 = 1735689600;
+  uint32_t date32 = mktime(&dt);
   pCharacteristicDate32->setValue(date32);
 
   // date64: Editable control for date (uint64_t) characteristics
@@ -145,7 +161,7 @@ void setup() {
   date64Descriptor->setValue(
     R"({"type":"date64", "order":3, "disabled":false, "label":"Date 64"})");
   pCharacteristicDate64->addDescriptor(date64Descriptor);
-  uint64_t date64 = 1735689600;
+  uint64_t date64 = mktime(&dt);
   pCharacteristicDate64->setValue((uint8_t *)&date64, sizeof(uint64_t));
 
   // datetime32: Editable control for datetime (uint32_t) characteristics
@@ -160,7 +176,7 @@ void setup() {
   dateTime32Descriptor->setValue(
     R"({"type":"datetime32", "order":4, "disabled":false, "label":"DateTime 32"})");
   pCharacteristicDateTime32->addDescriptor(dateTime32Descriptor);
-  uint32_t dateTime32 = 1735732740;
+  uint32_t dateTime32 = mktime(&dtm);
   pCharacteristicDateTime32->setValue(dateTime32);
 
   // datetime64: Editable control for datetime (uint64_t) characteristics
@@ -175,7 +191,8 @@ void setup() {
   dateTime64Descriptor->setValue(
     R"({"type":"datetime64", "order":5, "disabled":false, "label":"DateTime 64"})");
   pCharacteristicDateTime64->addDescriptor(dateTime64Descriptor);
-  uint64_t dateTime64 = 1735689600;
+  uint64_t dateTime64 = mktime(&dtm);
+  //1735732740;
   pCharacteristicDateTime64->setValue((uint8_t *)&dateTime64, sizeof(uint64_t));
 
   // Start the BLE service
