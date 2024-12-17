@@ -139,7 +139,7 @@ void setup() {
   // sint16: Editable control for signed int16 characteristics
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicSInt16 = pService->createCharacteristic(
-    CHARACTERISTIC_SINT16_UUID,  // Correct UUID for sint16
+    CHARACTERISTIC_SINT16_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
   pCharacteristicSInt16->setCallbacks(new IntegerCharacteristicCallbacks());
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.

@@ -12,13 +12,11 @@ ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte ord
 #define BYTESWAP64(x) static_cast<int64_t>(((x & 0xFF) << 56) | ((x >> 8) & 0xFF) << 48 | ((x >> 16) & 0xFF) << 40 | ((x >> 24) & 0xFF) << 32 | ((x >> 32) & 0xFF) << 24 | ((x >> 40) & 0xFF) << 16 | ((x >> 48) & 0xFF) << 8 | ((x >> 56) & 0xFF))
 
 // UUID for the BLE service
-#define SERVICE_UUID "00000040-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID "00000100-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID "10000040-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SINT8_UUID "10000041-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SINT16_UUID "10000042-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SINT32_UUID "10000043-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SINT64_UUID "10000044-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID "10000100-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SINT8_UUID "10000101-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SINT16_UUID "10000102-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -112,14 +110,14 @@ void setup() {
   pCharacteristicServiceName->addDescriptor(serviceNameDescriptor);
 
   // Set an initial value for the characteristic
-  pCharacteristicServiceName->setValue("Big Endian Signed Integers");
+  pCharacteristicServiceName->setValue("Big Endian Signed Integer Sliders");
 
   //// CONTROLS ////
   // If you add or remove characteristics, it may be necessary to forget the device (if paired)
   // in the Bluetooth settings and re-pair it on Android for changes to take effect.
   // Alternatively you can try Clear GATT cahce from device menu un MingleApp
 
-  // sint8: editable control for signed byte characteristics
+  // sint8sliderbe: editable slider control for signed byte characteristics
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   /*While a big-endian variant for a single byte might seem unnecessary,
   it's crucial because the Integer components read an arbitrarily long value and then truncate it to the specified byte size.
@@ -131,13 +129,13 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt8Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt8Descriptor->setValue(
-    R"({"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70})");
+    R"({"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70, "stepInt":1})"); //Defaults: minInt = 0, maxInt = 100, stepInt: 1
 
   pCharacteristicSInt8->addDescriptor(sInt8Descriptor);
-  uint8_t sint8 = -69;
+  uint8_t sint8 = 20;
   pCharacteristicSInt8->setValue(&sint8, sizeof(uint8_t));
 
-  // sint16: Editable control for signed int16 characteristics
+  // sint16sliderbe: Editable slider control for signed int16 characteristics
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicSInt16 = pService->createCharacteristic(
     CHARACTERISTIC_SINT16_UUID,
@@ -146,41 +144,11 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *sInt16Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   sInt16Descriptor->setValue(
-    R"({"type":"sint16be", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070})");
+    R"({"type":"sint16sliderbe", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-20, "maxInt":100, "stepInt":2})"); //Defaults: minInt = 0, maxInt = 100, stepInt: 1
   pCharacteristicSInt16->addDescriptor(sInt16Descriptor);
-  int16_t sint16 = -6969;
+  int16_t sint16 = 50;
   sint16 = BYTESWAP16(sint16);
   pCharacteristicSInt16->setValue((uint8_t *)&sint16, sizeof(int16_t));
-
-  // sint32: Editable control for signed int32 characteristics
-  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
-  BLECharacteristic *pCharacteristicSInt32 = pService->createCharacteristic(
-    CHARACTERISTIC_SINT32_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  pCharacteristicSInt32->setCallbacks(new IntegerCharacteristicCallbacks());
-  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
-  BLEDescriptor *sInt32Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
-  sInt32Descriptor->setValue(
-    R"({"type":"sint32be", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070})");
-  pCharacteristicSInt32->addDescriptor(sInt32Descriptor);
-  int32_t sint32 = -696969;
-  sint32 = BYTESWAP32(sint32);
-  pCharacteristicSInt32->setValue((uint8_t *)&sint32, sizeof(int32_t));
-
-  // sint64: Editable control for signed int64 characteristics
-  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
-  BLECharacteristic *pCharacteristicSInt64 = pService->createCharacteristic(
-    CHARACTERISTIC_SINT64_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  pCharacteristicSInt64->setCallbacks(new IntegerCharacteristicCallbacks());
-  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
-  BLEDescriptor *sInt64Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
-  sInt64Descriptor->setValue(
-    R"({"type":"sint64be", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070})");
-  pCharacteristicSInt64->addDescriptor(sInt64Descriptor);
-  int64_t sint64 = -6969696969;
-  sint64 = BYTESWAP64(sint64);
-  pCharacteristicSInt64->setValue((uint8_t *)&sint64, sizeof(int64_t));
 
   // Start the BLE service
   pService->start();

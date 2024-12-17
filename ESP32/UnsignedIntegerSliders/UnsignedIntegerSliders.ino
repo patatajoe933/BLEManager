@@ -4,13 +4,11 @@
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID "00000030-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID "000000E0-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID "10000030-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_UINT8_UUID        "10000031-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_UINT16_UUID       "10000032-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_UINT32_UUID       "10000033-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_UINT64_UUID       "10000034-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID "100000E0-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_UINT8_UUID        "100000E1-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_UINT16_UUID       "100000E2-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -114,14 +112,14 @@ void setup() {
   pCharacteristicServiceName->addDescriptor(serviceNameDescriptor);
 
   // Set an initial value for the characteristic
-  pCharacteristicServiceName->setValue("Unsigned Integers");
+  pCharacteristicServiceName->setValue("Unsigned Integer Sliders");
 
   //// CONTROLS ////
   // If you add or remove characteristics, it may be necessary to forget the device (if paired)
   // in the Bluetooth settings and re-pair it on Android for changes to take effect.
   // Alternatively you can try Clear GATT cahce from device menu un MingleApp
 
-  // uint8: editable control for unsigned byte characteristics
+  // uint8slider: editable slider control for unsigned byte characteristics
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicUInt8 = pService->createCharacteristic(
     CHARACTERISTIC_UINT8_UUID,
@@ -130,13 +128,13 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *uInt8Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   uInt8Descriptor->setValue(
-    R"({"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70})");
+    R"({"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1})"); //Defaults: minInt = 0, maxInt = 100, stepInt: 1
 
   pCharacteristicUInt8->addDescriptor(uInt8Descriptor);
-  uint8_t uint8 = 69;
+  uint8_t uint8 = 50;
   pCharacteristicUInt8->setValue(&uint8, sizeof(uint8_t));
 
-  // uint16: Editable control for unsigned int16 characteristics
+  // uint16slider: Editable slider control for unsigned int16 characteristics
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
   BLECharacteristic *pCharacteristicUInt16 = pService->createCharacteristic(
     CHARACTERISTIC_UINT16_UUID,
@@ -145,38 +143,10 @@ void setup() {
    //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *uInt16Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   uInt16Descriptor->setValue(
-    R"({"type":"uint16", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070})");
+    R"({"type":"uint16slider", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":100, "maxInt":200, "stepInt":2})"); //Defaults: minInt = 0, maxInt = 100, stepInt: 1
   pCharacteristicUInt16->addDescriptor(uInt16Descriptor);
-  uint16_t uint16 = 6969;
+  uint16_t uint16 = 100;
   pCharacteristicUInt16->setValue((uint8_t *)&uint16, sizeof(uint16_t));
-
-  // uint32: Editable control for unsigned int32 characteristics
-  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
-  BLECharacteristic *pCharacteristicUInt32 = pService->createCharacteristic(
-    CHARACTERISTIC_UINT32_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  pCharacteristicUInt32->setCallbacks(new UnsignedIntegerCharacteristicCallbacks());
-   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
-  BLEDescriptor *uInt32Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
-  uInt32Descriptor->setValue(
-    R"({"type":"uint32", "order":3, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070})");
-  pCharacteristicUInt32->addDescriptor(uInt32Descriptor);
-  uint32_t uint32 = 696969;
-  pCharacteristicUInt32->setValue((uint8_t *)&uint32, sizeof(uint32_t));
-
-  // uint64: Editable control for unsigned int64 characteristics
-  // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
-  BLECharacteristic *pCharacteristicUInt64 = pService->createCharacteristic(
-    CHARACTERISTIC_UINT64_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  pCharacteristicUInt64->setCallbacks(new UnsignedIntegerCharacteristicCallbacks());
-   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
-  BLEDescriptor *uInt64Descriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
-  uInt64Descriptor->setValue(
-    R"({"type":"uint64", "order":4, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070})");
-  pCharacteristicUInt64->addDescriptor(uInt64Descriptor);
-  uint64_t uint64 = 6969696969;
-  pCharacteristicUInt64->setValue((uint8_t *)&uint64, sizeof(uint64_t));
 
   // Start the BLE service
   pService->start();
