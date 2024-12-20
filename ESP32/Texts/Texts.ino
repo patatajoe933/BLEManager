@@ -4,14 +4,15 @@
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID                      "00000000-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID                       "00000000-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID  "10000000-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TITLE_VIEW_UUID    "10000001-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXT_VIEW_UUID     "10000002-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXT_UUID          "10000003-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_PASSWORD_UUID      "10000004-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_PIN_UUID           "10000005-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID   "10000000-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TITLE_VIEW_UUID     "10000001-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_VIEW_UUID      "10000002-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_UUID           "10000003-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_PASSWORD_UUID       "10000004-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_PIN_UUID            "10000005-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_RICH_TEXT_VIEW_UUID "10000006-74ee-43ce-86b2-0dde20dcefd6"
 // Default UUID mask for the Minglee app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by Minglee to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID            "2000face-74ee-43ce-86b2-0dde20dcefd6"
@@ -126,6 +127,23 @@ void setup() {
   pCharacteristicTextView->addDescriptor(textViewDescriptor);
   pCharacteristicTextView->setValue("Read-only text");
 
+    // RichTextView: read-only regular-sized text
+  BLECharacteristic *pCharacteristicRichTextView = pService->createCharacteristic(
+    CHARACTERISTIC_RICH_TEXT_VIEW_UUID,
+    BLECharacteristic::PROPERTY_READ
+    //| BLECharacteristic::PROPERTY_INDICATE
+  );
+  pCharacteristicRichTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+  //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
+  BLEDescriptor *richTextViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
+  richTextViewDescriptor->setValue(
+    R"({"type":"richTextView", "order":3, "disabled":false})"  // Control is always read-only. "Disabled" has only a visual effect.
+  );
+
+  pCharacteristicRichTextView->addDescriptor(richTextViewDescriptor);
+  pCharacteristicRichTextView->setValue(R"({"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true})" //color format can be #AARRGGBB or #RRGGBB
+  );
+
   // Text field: editable control for string characteristics
   // Supports UTF-8 encoding
   // If the characteristic is not writable, the "disabled" property is ignored, and the control remains disabled.
@@ -139,7 +157,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textDescriptor->setValue(
-    R"({"type":"text", "order":3, "disabled":false, label:"Text Field Label"})");
+    R"({"type":"text", "order":4, "disabled":false, "label":"Text Field Label", "maxBytes": 30})"); //maxBytes specifies the maximum number of bytes. It can be set up to 512 bytes. The default value is 512 bytes.
 
   pCharacteristicText->addDescriptor(textDescriptor);
   pCharacteristicText->setValue("Text value");
@@ -158,7 +176,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *passwordDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   passwordDescriptor->setValue(
-    R"({"type":"password", "order":4, "disabled":false, label:"Pasword Field Label"})");
+    R"({"type":"password", "order":5, "disabled":false, label:"Pasword Field Label", "maxBytes": 30})"); //maxBytes specifies the maximum number of bytes. It can be set up to 512 bytes. The default value is 512 bytes.
 
   pCharacteristicPassword->addDescriptor(passwordDescriptor);
   pCharacteristicPassword->setValue("");
@@ -177,7 +195,7 @@ void setup() {
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *pinDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   pinDescriptor->setValue(
-    R"({"type":"pin", "order":5, "disabled":false, label:"PIN Field Label"})");
+    R"({"type":"pin", "order":6, "disabled":false, label:"PIN Field Label", "maxBytes": 30})"); //maxBytes specifies the maximum number of bytes. It can be set up to 512 bytes. The default value is 512 bytes.
 
   pCharacteristicPIN->addDescriptor(pinDescriptor);
   pCharacteristicPIN->setValue("");
