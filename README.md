@@ -1,2 +1,2 @@
 # BLE Manager
-Sample Projects Demonstrating Minglee App Integration
+Sample Projects Demonstrating BLE Manager App Integration

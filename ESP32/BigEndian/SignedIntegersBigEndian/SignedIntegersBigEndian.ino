@@ -19,8 +19,8 @@ ESP32 transmits data in Little-Endian byte order. To emulate Big-Endian byte ord
 #define CHARACTERISTIC_SINT16_UUID "10000042-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_SINT32_UUID "10000043-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_SINT64_UUID "10000044-74ee-43ce-86b2-0dde20dcefd6"
-// Default UUID mask for the Minglee app is ####face-####-####-####-############
-// The segment "face" (case-insensitive) is used by Minglee to identify descriptors
+// Default UUID mask for the BLE Manager app is ####face-####-####-####-############
+// The segment "face" (case-insensitive) is used by BLE Manager to identify descriptors
 #define CUSTOM_DESCRIPTOR_UUID "2000face-74ee-43ce-86b2-0dde20dcefd6"
 
 // Custom server callback class to handle connection events
@@ -76,7 +76,7 @@ void setup() {
   Serial.begin(115200);
 
   // Initialize BLE device with a name
-  BLEDevice::init("Minglee device");
+  BLEDevice::init("BLE Device");
 
   // Create a BLE server and set its callback class
   BLEServer *pServer = BLEDevice::createServer();
@@ -91,7 +91,7 @@ void setup() {
 
   // Create a BLE characteristic for service name
   // The value of this characteristic will be displayed as the service name.
-  // The "order" value determines the order in which the service appears in the Minglee app.
+  // The "order" value determines the order in which the service appears in the BLE Manager app.
   // Only one "serviceName" characteristic is supported per service.
   // If a service contains multiple "serviceName" characteristics, one may be selected randomly.
 
@@ -99,7 +99,7 @@ void setup() {
     CHARACTERISTIC_SERVICE_NAME_UUID,
     BLECharacteristic::PROPERTY_READ);
 
-  // Add a custom descriptor used by the Minglee app
+  // Add a custom descriptor used by the BLE Manager app
   // Only one descriptor matching the mask is supported per characteristic.
   // If multiple descriptors match, one may be selected randomly.
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
