@@ -36,18 +36,66 @@ Pokročilý scénář
 Tento odstavec zatím klidně můžete přeskočit a vrátit se k němu, až si vyzkoušíte základní funkce. Představte si situaci, že máte termostat s připojením na WI-FI. Chcete, aby většina členů domácnosti mohla nastavovat pouze teplotu v určitém rozsahu, ale vy chcete mít možnost nastavovat také připojení k WI-FI a občas si trochu více přitopit :). Můžete toho docílit tak, že si vytovoříte dva descriptory odpovídající různým maskám. Například ####fBce-####-####-####-############ a ####fAce-####-####-####-############. Descriptorem s UUID odpovídající jedné první masce popíšete všechny vlastnosti zařízení a tuto masku si nastavíte ve vaší aplikaci. Descriptorem odpovídající druhé masce popíšete pouze charakteristiku nastavující teplotu, přičemž hodnota descriptrou může určovat jiné limity pro tuto charakteristiku. Tuto masku nastavíte v aplikacích ostatních členů domácnosti, nebo nemusíte nastavovat nic, pokud pro tyto účely použijete výchozí masku.
 
 Hodnoty descriptoru
-Texts
+Service Name
+{"type":"serviceName", "order":1}
+Texts (výchozí maximální počet bajtů je 512)
+{"type":"textView", "order":2, "disabled":false}
+{"type":"titleView", "order":1, "disabled":false}
+{"type":"richTextView", "order":3, "disabled":false} {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
+{"type":"text", "order":4, "disabled":false, "label":"Text Field Label", "maxBytes": 30}
+{"type":"password", "order":5, "disabled":false, label:"Pasword Field Label", "maxBytes": 30}
+{"type":"pin", "order":6, "disabled":false, label:"PIN Field Label", "maxBytes": 30}
+
 Signed Integers
+{"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70}
+{"type":"sint16", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
+{"type":"sint32", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
+{"type":"sint64", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
+
 Signed Integer Sliders
+{"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
+{"type":"sint16slider", "order":2, "disabled":false, "label":"Signed Int16", "minInt":0, "maxInt":100, "stepInt":2}
+
 Unsigned Integers
-Signed Integer Sliders
+{"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70}
+{"type":"uint16", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
+{"type":"uint32", "order":3, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
+{"type":"uint64", "order":4, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
+
+Unsigned Integer Sliders
+{"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
+{"type":"uint16slider", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":100, "maxInt":200, "stepInt":2}
+
 Floats
+{"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
+{"type":"float", "order":2, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
+{"type":"double", "order":3, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
+
 Float Sliders
+{"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": 0, "maxFloat": 75, "stepFloat": 0.1}
+{"type":"floatslider", "order":2, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
+
 Booleans
+{"type":"check", "order":1, "disabled":false, label:"Checkbox"}
+{"type":"switch", "order":2, "disabled":false, label:"Switch"}
+
 Button
+{"type":"button", "order":1, "disabled":false, "label":"Button"}
+
 Color
+{"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
+
 Date and Time
+{"type":"time", "order":1, "disabled":false, "label":"Time"}
+{"type":"date32", "order":2, "disabled":false, "label":"Date 32"}
+{"type":"date64", "order":3, "disabled":false, "label":"Date 64"}
+{"type":"datetime32", "order":4, "disabled":false, "label":"DateTime 32"}
+{"type":"datetime64", "order":5, "disabled":false, "label":"DateTime 64"}
+
 Dropdown
+{"type":"dropdown", "order":1, "disabled":false, label:"Dropdown Menu", "options":["Option1","Option2","Option3"]}
+
+BigEndian
 
 
 
