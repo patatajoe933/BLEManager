@@ -39,45 +39,45 @@ Hodnoty descriptoru
 Service Name
 {"type":"serviceName", "order":1}
 Texts (výchozí maximální počet bajtů je 512)
-{"type":"textView", "order":2, "disabled":false}
+{"type":"textView", "order":1, "disabled":false}
 {"type":"titleView", "order":1, "disabled":false}
-{"type":"richTextView", "order":3, "disabled":false} {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
-{"type":"text", "order":4, "disabled":false, "label":"Text Field Label", "maxBytes": 30}
-{"type":"password", "order":5, "disabled":false, label:"Pasword Field Label", "maxBytes": 30}
-{"type":"pin", "order":6, "disabled":false, label:"PIN Field Label", "maxBytes": 30}
+{"type":"richTextView", "order":1, "disabled":false} {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
+{"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 30}
+{"type":"password", "order":1, "disabled":false, label:"Pasword Field Label", "maxBytes": 30}
+{"type":"pin", "order":1, "disabled":false, label:"PIN Field Label", "maxBytes": 30}
 
 Signed Integers
 {"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70}
-{"type":"sint16", "order":2, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
-{"type":"sint32", "order":3, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
-{"type":"sint64", "order":4, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
+{"type":"sint16", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
+{"type":"sint32", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
+{"type":"sint64", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
 
 Signed Integer Sliders
 {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
-{"type":"sint16slider", "order":2, "disabled":false, "label":"Signed Int16", "minInt":0, "maxInt":100, "stepInt":2}
+{"type":"sint16slider", "order":1, "disabled":false, "label":"Signed Int16", "minInt":0, "maxInt":100, "stepInt":2}
 
 Unsigned Integers
 {"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70}
-{"type":"uint16", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
-{"type":"uint32", "order":3, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
-{"type":"uint64", "order":4, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
+{"type":"uint16", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
+{"type":"uint32", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
+{"type":"uint64", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
 
 Unsigned Integer Sliders
 {"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
-{"type":"uint16slider", "order":2, "disabled":false, "label":"Unsigned Int16", "minInt":100, "maxInt":200, "stepInt":2}
+{"type":"uint16slider", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":100, "maxInt":200, "stepInt":2}
 
 Floats
 {"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
-{"type":"float", "order":2, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
-{"type":"double", "order":3, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
+{"type":"float", "order":1, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
+{"type":"double", "order":1, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
 
 Float Sliders
 {"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": 0, "maxFloat": 75, "stepFloat": 0.1}
-{"type":"floatslider", "order":2, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
+{"type":"floatslider", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
 
 Booleans
 {"type":"check", "order":1, "disabled":false, label:"Checkbox"}
-{"type":"switch", "order":2, "disabled":false, label:"Switch"}
+{"type":"switch", "order":1, "disabled":false, label:"Switch"}
 
 Button
 {"type":"button", "order":1, "disabled":false, "label":"Button"}
@@ -87,15 +87,51 @@ Color
 
 Date and Time
 {"type":"time", "order":1, "disabled":false, "label":"Time"}
-{"type":"date32", "order":2, "disabled":false, "label":"Date 32"}
-{"type":"date64", "order":3, "disabled":false, "label":"Date 64"}
-{"type":"datetime32", "order":4, "disabled":false, "label":"DateTime 32"}
-{"type":"datetime64", "order":5, "disabled":false, "label":"DateTime 64"}
+{"type":"date32", "order":1, "disabled":false, "label":"Date 32"}
+{"type":"date64", "order":1, "disabled":false, "label":"Date 64"}
+{"type":"datetime32", "order":1, "disabled":false, "label":"DateTime 32"}
+{"type":"datetime64", "order":1, "disabled":false, "label":"DateTime 64"}
 
 Dropdown
 {"type":"dropdown", "order":1, "disabled":false, label:"Dropdown Menu", "options":["Option1","Option2","Option3"]}
 
 BigEndian
+
+ Big Endian Signed Integers
+{"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70}
+{"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
+{"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
+{"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
+
+Big Endian Signed Integer Sliders
+{"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70, "stepInt":1}
+{"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-20, "maxInt":100, "stepInt":2}
+
+Big Endian Unsigned Integers
+{"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70}
+{"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
+{"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
+{"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
+
+Big Endian Unsigned Integer Sliders
+{"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
+{"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":2}
+
+Big Endian Floats
+{"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
+{"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
+{"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
+
+Big Endian Float Sliders
+{"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": 0, "maxFloat": 75, "stepFloat": 0.1}
+{"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
+
+Big Endian Date and Time
+{"type":"timebe", "order":1, "disabled":false, "label":"Time"}
+{"type":"date32be", "order":1, "disabled":false, "label":"Date 32"}
+{"type":"date64be", "order":1, "disabled":false, "label":"Date 64"}
+{"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
+{"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
 
 
 
