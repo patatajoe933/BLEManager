@@ -25,4 +25,11 @@ Tento ukázkový descriptor zajistí, že se charakteristika zobrazí v aplikaci
   Průvodce
   Všechny následující příklady jsou určeny pro ESP32. Ale BLE manager lze použít s libovolným zařízením.
   Pojmenováváme službu
-  Aby se v aplikaci zobrazil lidsky čitelný název služby, musí služba poskytovat charakteristku, jejíž hodnota se použije jako název. Takovou charakteristiku označíme descriptorem s UUID odpovídající masce a hodnotou ve formátu JSON {"type":"serviceName", "order":1}. 
+  Aby se v aplikaci zobrazil lidsky čitelný název služby, musí služba poskytovat charakteristku, jejíž hodnota se použije jako název. Takovou charakteristiku označíme descriptorem s UUID odpovídající masce a hodnotou ve formátu JSON {"type":"serviceName", "order":1}.
+  "type":"serviceName" říká, že tato charakteristika se má interpretovat jako název charakteristiky. "order":1 určuje pořadí zobrazení v aplikaci.
+
+  Popisujeme charakteristiku
+  Pokud máme v zařízení charakteristiku obsahující editovatelnou textovou hodnotu. Můžeme k ní přidat přidat descriptor s touto hodnotou. {"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80}
+  "type":"text" říká, že se jedná o textvou hodnotu. "order":1 určuje pořadí zobrazení v aplikaci. "disabled":false umožňuje řídit editovatelnost. Toto nastavení je však podřízeno možnostem charakteristiky. Pokud charakteristika není zapisovatelná, pak "disabled":false nebude mít efekt. "label":"My Text Field Label" určuje s jakým názvem se textové pole v aplikaci zobrazí. "maxBytes": 80 Tímto lze omezit počet bajtů, které lze zapsat.
+
+  
