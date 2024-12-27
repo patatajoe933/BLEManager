@@ -9,7 +9,7 @@
 // UUIDs for BLE characteristics
 #define CHARACTERISTIC_SERVICE_NAME_UUID   "11000030-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_TEXT_UUID           "11000031-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SWITCH_UUID         "11000041-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SWITCH_UUID         "11000032-74ee-43ce-86b2-0dde20dcefd6"
 
 // Default UUID mask for the BLE Manager app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by BLE Manager to identify descriptors

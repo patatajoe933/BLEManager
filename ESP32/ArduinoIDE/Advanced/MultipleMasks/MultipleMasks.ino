@@ -13,12 +13,12 @@ In this example, the advanced user has access to two services, while the limited
 #include <BLE2902.h>
 
 // UUID for the BLE service
-#define SERVICE_UUID                       "01000030-74ee-43ce-86b2-0dde20dcefd6"
-#define SERVICE2_UUID                      "01000031-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE_UUID                       "01000040-74ee-43ce-86b2-0dde20dcefd6"
+#define SERVICE2_UUID                      "01000041-74ee-43ce-86b2-0dde20dcefd6"
 // UUIDs for BLE characteristics
-#define CHARACTERISTIC_SERVICE_NAME_UUID   "11000030-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_TEXT_UUID           "11000031-74ee-43ce-86b2-0dde20dcefd6"
-#define CHARACTERISTIC_SWITCH_UUID         "11000041-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SERVICE_NAME_UUID   "11000040-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_TEXT_UUID           "11000041-74ee-43ce-86b2-0dde20dcefd6"
+#define CHARACTERISTIC_SWITCH_UUID         "11000042-74ee-43ce-86b2-0dde20dcefd6"
 
 // Default UUID mask for the BLE Manager app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by BLE Manager to identify descriptors
@@ -68,7 +68,7 @@ void setup() {
   Serial.begin(115200);
 
   // Initialize BLE device with a name
-  BLEDevice::init("Multiple Services Device");
+  BLEDevice::init("Multiple Masks Device");
 
   // Create a BLE server and set its callback class
   BLEServer *pServer = BLEDevice::createServer();
