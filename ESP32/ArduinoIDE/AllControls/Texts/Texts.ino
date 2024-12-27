@@ -40,20 +40,11 @@ class StringCharacteristicCallbacks : public BLECharacteristicCallbacks {
   }
 };
 
-BLECharacteristic *testCharacteristic = NULL;
 void setup() {
   Serial.begin(115200);
 
   // Initialize BLE device with a name
   BLEDevice::init("BLE Device");
-
-  // Configure BLE security settings
-  // Static PIN bonding
-  BLESecurity *pSecurity = new BLESecurity();
-  // It's important to call setStaticPIN() before setAuthenticationMode() for bonding to work correctly
-  // Reference: https://github.com/espressif/arduino-esp32/blob/98da424de638836e400d4a110b9cb9a101e8cc22/libraries/BLE/src/BLESecurity.cpp#L65
-  pSecurity->setStaticPIN(123456);
-  pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
 
   // Create a BLE server and set its callback class
   BLEServer *pServer = BLEDevice::createServer();
@@ -74,7 +65,6 @@ void setup() {
   BLECharacteristic *pCharacteristicServiceName = pService->createCharacteristic(
     CHARACTERISTIC_SERVICE_NAME_UUID,
     BLECharacteristic::PROPERTY_READ);
-  pCharacteristicServiceName->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
 
   // Add a custom descriptor used by the BLE Manager app
   // Only one descriptor matching the mask is supported per characteristic.
@@ -99,9 +89,8 @@ void setup() {
   BLECharacteristic *pCharacteristicTitleView = pService->createCharacteristic(
     CHARACTERISTIC_TITLE_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
-  pCharacteristicTitleView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *titleViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   titleViewDescriptor->setValue(
@@ -115,9 +104,8 @@ void setup() {
   BLECharacteristic *pCharacteristicTextView = pService->createCharacteristic(
     CHARACTERISTIC_TEXT_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
-  pCharacteristicTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *textViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textViewDescriptor->setValue(
@@ -131,9 +119,8 @@ void setup() {
   BLECharacteristic *pCharacteristicRichTextView = pService->createCharacteristic(
     CHARACTERISTIC_RICH_TEXT_VIEW_UUID,
     BLECharacteristic::PROPERTY_READ
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
-  pCharacteristicRichTextView->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *richTextViewDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   richTextViewDescriptor->setValue(
@@ -150,10 +137,9 @@ void setup() {
   BLECharacteristic *pCharacteristicText = pService->createCharacteristic(
     CHARACTERISTIC_TEXT_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
   pCharacteristicText->setCallbacks(new StringCharacteristicCallbacks());
-  pCharacteristicText->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textDescriptor->setValue(
@@ -168,11 +154,10 @@ void setup() {
   BLECharacteristic *pCharacteristicPassword = pService->createCharacteristic(
     CHARACTERISTIC_PASSWORD_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
 
   pCharacteristicPassword->setCallbacks(new StringCharacteristicCallbacks());
-  pCharacteristicPassword->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *passwordDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   passwordDescriptor->setValue(
@@ -187,11 +172,10 @@ void setup() {
   BLECharacteristic *pCharacteristicPIN = pService->createCharacteristic(
     CHARACTERISTIC_PIN_UUID,
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
-    //| BLECharacteristic::PROPERTY_INDICATE
   );
 
   pCharacteristicPIN->setCallbacks(new StringCharacteristicCallbacks());
-  pCharacteristicPIN->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED | ESP_GATT_PERM_WRITE_ENCRYPTED);
+
   //! The default maximum length of a descriptor is 100 bytes. Setting a descriptor value that exceeds this limit will cause a crash during startup.
   BLEDescriptor *pinDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   pinDescriptor->setValue(
@@ -200,10 +184,6 @@ void setup() {
   pCharacteristicPIN->addDescriptor(pinDescriptor);
   pCharacteristicPIN->setValue("");
 
-  ////NOTIFY TEST////
-  //testCharacteristic = pCharacteristicTitleView;
-  //testCharacteristic->addDescriptor(new BLE2902());
-  /////
   // Start the BLE service
   pService->start();
 
@@ -216,12 +196,6 @@ void setup() {
   Serial.println("BLE server is running and advertising...");
 }
 
-int counter = 0;
 void loop() {
-  // Empty loop since BLE server runs in the background
-  //NOTIFY TEST
-  /*delay(5000);
-  testCharacteristic->setValue(String(counter++));
-  testCharacteristic->indicate();*/
-  ///////////
+
 }
