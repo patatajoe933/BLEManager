@@ -14,7 +14,7 @@ Charakteristiky jsou hodnoty, které služba poskytuje. Jde o pole bajtů, kter�
 Hodnota descriptoru popisuje charakteristiku. Existují standardní typy descriptorů, pro BLE Manager však budeme potřebovat custom descriptor, kterým BLE Manageru řekneme, jak má hodnotu interpretovat a jakou grafickou komponentu má použít pro zobrazení. Pro hodnoty descriptru se v aplikaci BLE Manager používá formát JSON.
 
 ### Maska UUID descriptoru
-Aby aplikace poznala, který descriptor je ten správný custom descriptor, využívá masku descriptrou. Maska se nastavuje u každého zařízení. Může obsahovat hexadecimální číslice a `#`. Na místě `#` může být v UUID descriptoru libovolná číslice. Výchozí maska pro každé přidané zařízení je: ####face-####-####-####-############. Takové masce vyhovuje například toto UUID 2000face-74ee-43ce-86b2-0dde20dcefd6. V pokročilých scénářích můžete skrývat, nebo různě interpretovat hodnoty na základě rozdílných masek. 
+Aby aplikace poznala, který descriptor je ten správný custom descriptor, využívá masku descriptrou. Maska se nastavuje u každého zařízení. Může obsahovat hexadecimální číslice a `#`. Na místě `#` může být v UUID descriptoru libovolná číslice. Výchozí maska pro každé přidané zařízení je: `####face-####-####-####-############`. Takové masce vyhovuje například toto UUID 2000face-74ee-43ce-86b2-0dde20dcefd6. V pokročilých scénářích můžete skrývat, nebo různě interpretovat hodnoty na základě rozdílných masek. 
 
 ## Co tedy musíte udělat pro možnost použití vašeho zařízení v aplikaci BLE Manager?
 Nastavit custom descriptor. To je vše.
@@ -22,9 +22,6 @@ Nastavit custom descriptor. To je vše.
 ---
 
 Tento ukázkový descriptor zajistí, že se charakteristika zobrazí v aplikaci jako textové pole. Pokud má charakteristika možnost zápisu a máte zakoupenu možnost zápisu, pak bude textové pole editovatelné:
-
-
-Tento ukázkový descriptor zajistí, že se charakteristika zobrazí v aplikaci jako textové pole. Pokud má charakteristika možnost zápisu a máte zakoupenu možnost zápisu, pak bude textové pole editovatelné.
   BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
   textDescriptor->setValue(
     R"({"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80})");
