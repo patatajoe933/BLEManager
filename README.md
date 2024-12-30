@@ -134,20 +134,40 @@ UInt16Slider
 Slider pro nastavení 16bitového unsigned integeru. Vlastnot stepInt určuje velikost kroku.
 
 Floats
-{"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
-{"type":"float", "order":1, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
-{"type":"double", "order":1, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
+
+Half
+{"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -100, "maxFloat": 100}
+Zapisovatelné pole pro 16bitový float.
+
+Float
+{"type":"float", "order":1, "disabled":false, label:"Float 32", "minFloat": -100, "maxFloat": 100}
+Zapisovatelné pole pro 32bitový float.
+
+Double
+{"type":"double", "order":1, "disabled":false, label:"Float 64", "minFloat": -100, "maxFloat": 100}
+Zapisovatelné pole pro 64bitový float.
 
 Float Sliders
-{"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": 0, "maxFloat": 75, "stepFloat": 0.1}
-{"type":"floatslider", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
+
+HalfSlider
+{"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+Slider pro nastavení hodnoty 16bitového float. Vlastnot stepFloat určuje velikost kroku.
+
+{"type":"floatslider", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+Slider pro nastavení hodnoty 32bitového float. Vlastnot stepFloat určuje velikost kroku.
 
 Booleans
+
+Check
 {"type":"check", "order":1, "disabled":false, label:"Checkbox"}
+Checkbox pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false, jinak true. Zapisuje false = 0, true = 1 
+
 {"type":"switch", "order":1, "disabled":false, label:"Switch"}
+Switch pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false, jinak true. Zapisuje false = 0, true = 1 
 
 Button
 {"type":"button", "order":1, "disabled":false, "label":"Button"}
+Pos stisknutí nastaví hodnotu 8bitového unsigned integeru na hodnotu o jedna vyšší. Začíná na 0.
 
 Color
 {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
