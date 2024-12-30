@@ -61,7 +61,7 @@ Rich Text View
 Hodnota této charakteristky bude interpretována jako text ve formátu JSON a zobrazena jen pro čtení.
 Hodnota charakteristkiy může mít tyto vlastnosti.
 text - zobrazený text
-color - barava textu
+color - barava textu. Možné formáty: #RRGGBB #AARRGGBB
 backgroun - arva pozadí textu
 title - Pokud je true, bude použito větší písmo
 {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
@@ -171,6 +171,8 @@ Pos stisknutí nastaví hodnotu 8bitového unsigned integeru na hodnotu o jedna 
 
 Color
 {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
+Colorpicker pro výběr barvy. Pracuje s 32bitovou ABGR hodnotou, kde R je uložno na 1. bajtu. 0xFF05E6F2; //R:0xF2, G:0xE6, B:0x05, A:0xFF
+Vlastnost alphaSlider určuje, zda se zobrazí slider pro nastavení alfa kanálu.
 
 Date and Time
 {"type":"time", "order":1, "disabled":false, "label":"Time"}
