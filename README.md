@@ -181,43 +181,52 @@ Time
 Umožňuje nastavit čas jako 32bitový unsigned integer. Hodnota udává počet sekund od půlnoci.
 
 {"type":"date32", "order":1, "disabled":false, "label":"Date 32"}
+Umožňuje nastavit 32bitové datum. Hodnota určuje počet sekund od začátku Unix epochy. Čas je vždy 0:00.
+
 {"type":"date64", "order":1, "disabled":false, "label":"Date 64"}
+Umožňuje nastavit 64bitové datum. Hodnota určuje počet sekund od začátku Unix epochy. Čas je vždy 0:00.
+
 {"type":"datetime32", "order":1, "disabled":false, "label":"DateTime 32"}
+Umožňuje nastavit 32bitový datum a čas. Hodnota určuje počet sekund od začátku Unix epochy.
+
 {"type":"datetime64", "order":1, "disabled":false, "label":"DateTime 64"}
+Umožňuje nastavit 32bitový datum a čas. Hodnota určuje počet sekund od začátku Unix epochy.
 
 Dropdown
 {"type":"dropdown", "order":1, "disabled":false, label:"Dropdown Menu", "options":["Option1","Option2","Option3"]}
+Umožňuje výběr jedné z textových hodnot z pole options.
 
-BigEndian
+BigEndian varianty komponent
+8bitové varinty se mohou zdát jako nadbytečné, ale jsou zde z důvodu konzistentní interpretace dat. Každá integer komponenta dokáže totiž zpravocat libovolně dlouhou hodnotu tak, že ji ořízne na požadovaný počet bajtů.
 
- Big Endian Signed Integers
-{"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70}
-{"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
-{"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
-{"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
+Big Endian Signed Integers
+{"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
+{"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
+{"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
+{"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
 Big Endian Signed Integer Sliders
-{"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70, "stepInt":1}
-{"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-20, "maxInt":100, "stepInt":2}
+{"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
+{"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
 Big Endian Unsigned Integers
-{"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70}
-{"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
-{"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
-{"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
+{"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
+{"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
+{"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
+{"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
 Big Endian Unsigned Integer Sliders
 {"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
-{"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":2}
+{"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
 
 Big Endian Floats
-{"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
-{"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -20, "maxFloat": 20}
-{"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat": -30, "maxFloat": 30}
+{"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
+{"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat":-100, "maxFloat":100}
+{"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
 
 Big Endian Float Sliders
-{"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": 0, "maxFloat": 75, "stepFloat": 0.1}
-{"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 1}
+{"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+{"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
 Big Endian Date and Time
 {"type":"timebe", "order":1, "disabled":false, "label":"Time"}
