@@ -175,7 +175,11 @@ Colorpicker pro výběr barvy. Pracuje s 32bitovou ABGR hodnotou, kde R je ulož
 Vlastnost alphaSlider určuje, zda se zobrazí slider pro nastavení alfa kanálu.
 
 Date and Time
+
+Time
 {"type":"time", "order":1, "disabled":false, "label":"Time"}
+Umožňuje nastavit čas jako 32bitový unsigned integer. Hodnota udává počet sekund od půlnoci.
+
 {"type":"date32", "order":1, "disabled":false, "label":"Date 32"}
 {"type":"date64", "order":1, "disabled":false, "label":"Date 64"}
 {"type":"datetime32", "order":1, "disabled":false, "label":"DateTime 32"}
