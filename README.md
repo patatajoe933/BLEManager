@@ -57,7 +57,7 @@ Hodnoty descriptoru jsou ve formátu JSON. Parsování je poměrně benevoletní
     {"type":"serviceName", "order":1}
 
 Descriptorem s touto hodnotou označíme charakteristiku, jejíž hodnota se bude interpretovat jako text a použije se pro název tabu v aplikaci. Každá služba může obsahovat jednu takto popsanou charakteristiku.
-
+#### *Texts*
 #### Text View
 
     {"type":"textView", "order":1, "disabled":false}
@@ -233,13 +233,14 @@ Checkbox pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false
     {"type":"switch", "order":1, "disabled":false, label:"Switch"}
 
 Switch pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false, jinak true. Zapisuje false = 0, true = 1 
-
+#### *Actions*
 #### Button
 
     {"type":"button", "order":1, "disabled":false, "label":"Button"}
 
 Pos stisknutí nastaví hodnotu 8bitového unsigned integeru na hodnotu o jedna vyšší. Začíná na 0.
 
+#### *Colors*
 #### Color
 
     {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
@@ -323,3 +324,7 @@ Umožňuje výběr jedné z textových hodnot z pole options.
 {"type":"date64be", "order":1, "disabled":false, "label":"Date 64"}
 {"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
 {"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
+
+
+
+  
