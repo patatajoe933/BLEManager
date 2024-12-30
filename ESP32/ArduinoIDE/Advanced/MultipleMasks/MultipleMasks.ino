@@ -20,12 +20,13 @@ In this example, the advanced user has access to two services, while the limited
 #define CHARACTERISTIC_TEXT_UUID           "11000041-74ee-43ce-86b2-0dde20dcefd6"
 #define CHARACTERISTIC_SWITCH_UUID         "11000042-74ee-43ce-86b2-0dde20dcefd6"
 
+// Set mask ####fBce-####-####-####-############ in device settings for full access.
+#define CUSTOM_DESCRIPTOR_UUID            "2000fbce-74ee-43ce-86b2-0dde20dcefd6"
+
 // Default UUID mask for the BLE Manager app is ####face-####-####-####-############
 // The segment "face" (case-insensitive) is used by BLE Manager to identify descriptors
-#define CUSTOM_DESCRIPTOR_UUID            "2000face-74ee-43ce-86b2-0dde20dcefd6"
-
-//Set mask ####fBce-####-####-####-############ in device settings for limited access.
-#define CUSTOM_LIMITED_DESCRIPTOR_UUID    "2000fbce-74ee-43ce-86b2-0dde20dcefd6"
+// An app with the default descriptor setting will have limited access.
+#define CUSTOM_LIMITED_DESCRIPTOR_UUID    "2000face-74ee-43ce-86b2-0dde20dcefd6"
 
 // Custom server callback class to handle connection events
 class ServerCallbacks : public BLEServerCallbacks {
