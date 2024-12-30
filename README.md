@@ -97,18 +97,41 @@ SInt64
 Zapisovatelné pole pro 64bitový signed integer.
 
 Signed Integer Sliders
+
+SInt8Slider
 {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
-{"type":"sint16slider", "order":1, "disabled":false, "label":"Signed Int16", "minInt":0, "maxInt":100, "stepInt":2}
+Slider pro nastavení 8bitového signed integeru. Vlastnot stepInt určuje velikost kroku.
+
+SInt16Slider
+{"type":"sint16slider", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
+Slider pro nastavení 16bitového signed integeru. Vlastnot stepInt určuje velikost kroku.
 
 Unsigned Integers
-{"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":60, "maxInt":70}
-{"type":"uint16", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":6060, "maxInt":7070}
-{"type":"uint32", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":606060, "maxInt":707070}
-{"type":"uint64", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":6060606060, "maxInt":7070707070}
+UInt8
+{"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
+Zapisovatelné pole pro 8bitový unsigned integer.
+
+UInt16
+{"type":"uint16", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
+Zapisovatelné pole pro 16bitový unsigned integer.
+
+UInt32
+{"type":"uint32", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
+Zapisovatelné pole pro 32bitový unsigned integer.
+
+UInt64
+{"type":"uint64", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
+Zapisovatelné pole pro 64bitový unsigned integer.
 
 Unsigned Integer Sliders
+
+UInt8Slider
 {"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
-{"type":"uint16slider", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":100, "maxInt":200, "stepInt":2}
+Slider pro nastavení 8bitového unsigned integeru. Vlastnot stepInt určuje velikost kroku.
+
+UInt16Slider
+{"type":"uint16slider", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100, "stepInt":1}
+Slider pro nastavení 16bitového unsigned integeru. Vlastnot stepInt určuje velikost kroku.
 
 Floats
 {"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -10, "maxFloat": 10}
