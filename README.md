@@ -48,7 +48,7 @@ Název služby
 {"type":"serviceName", "order":1}
 Descriptorem s touto hodnotou označíme charakteristiku, jejíž hodnota se bude interpretovat jako text a použije se pro název tabu v aplikaci. Každá služba může obsahovat jednu takto popsanou charakteristiku.
 
-Text view
+Text View
 {"type":"textView", "order":1, "disabled":false}
 Hodnota takto popsané charakteristiky bude interpretována jako text a zobrazena jen pro čtení.
 
@@ -56,16 +56,45 @@ Title
 {"type":"titleView", "order":1, "disabled":false}
 Hodnota takto popsané charakteristiky bude interpretována jako text a zobrazena větším písmem jen pro čtení.
 
-{"type":"richTextView", "order":1, "disabled":false} {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
+Rich Text View
+{"type":"richTextView", "order":1, "disabled":false}
+Hodnota této charakteristky bude interpretována jako text ve formátu JSON a zobrazena jen pro čtení.
+Hodnota charakteristkiy může mít tyto vlastnosti.
+text - zobrazený text
+color - barava textu
+backgroun - arva pozadí textu
+title - Pokud je true, bude použito větší písmo
+{"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
+
+Text
 {"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 30}
+Zapisovatelné textové pole. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
+
+Password
 {"type":"password", "order":1, "disabled":false, label:"Pasword Field Label", "maxBytes": 30}
+Zapisovatelné textové pole pro zadání hesla. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
+
+PIN
 {"type":"pin", "order":1, "disabled":false, label:"PIN Field Label", "maxBytes": 30}
+Zapisovatelné textové pole pro zadání číselného hesla. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
 
 Signed Integers
-{"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-70, "maxInt":70}
-{"type":"sint16", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-7070, "maxInt":7070}
-{"type":"sint32", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-707070, "maxInt":707070}
-{"type":"sint64", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-7070707070, "maxInt":7070707070}
+
+SInt8
+{"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
+Zapisovatelné pole pro 8bitový signed integer.
+
+SInt16
+{"type":"sint16", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
+Zapisovatelné pole pro 16bitový signed integer.
+
+SInt32
+{"type":"sint32", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
+Zapisovatelné pole pro 32bitový signed integer.
+
+SInt64
+{"type":"sint64", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
+Zapisovatelné pole pro 64bitový signed integer.
 
 Signed Integer Sliders
 {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
