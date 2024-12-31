@@ -1,8 +1,3 @@
----
-layout: default
-title: Testovací stránka
----
-
 # Privacy Policy
 
 **Effective Date:** January 1, 2025  
