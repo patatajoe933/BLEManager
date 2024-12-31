@@ -52,7 +52,7 @@ In more advanced scenarios, different masks can be used to achieve more complex 
 
 #### Examples
 
-- [Examples](Examples)
+- [Examples](https://github.com/petrsatka/BLEManager/tree/main/Examples)
 
 This guide references examples primarily for the ESP32 microcontroller. However, it's important to understand that the BLE Manager application is designed to be versatile and can be used with any Bluetooth Low Energy (BLE) device, regardless of its underlying hardware or firmware.
 
