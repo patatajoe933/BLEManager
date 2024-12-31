@@ -566,7 +566,7 @@ Allows selecting one of the text values from the options array.
 
 #### Examples
 
-- [Floats.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatsBigEndian/FloatsBigEndian.ino)
+- [FloatsBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatsBigEndian/FloatsBigEndian.ino)
 
 #### HalfBe
     {"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
