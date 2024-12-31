@@ -1,4 +1,3 @@
-[Otevřít test.md](/PrivacyPolicy/Index.md)
 ***The application will be publicly available soon. If you would like to participate in closed testing, please contact me at [petr.satka@gmail.com](mailto:petr.satka@gmail.com).***
 
 # BLE Manager
@@ -606,3 +605,7 @@ Allows selecting one of the text values from the options array.
     {"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
 #### DateTime64Be
     {"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
+
+---
+
+[Privacy Policy](PrivacyPolicy/Index.md)
