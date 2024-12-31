@@ -453,7 +453,7 @@ Allows selecting one of the text values from the options array.
 #### SInt16SliderBe
     {"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
-#### *Big Endian Unsigned Integers*
+### *Big Endian Unsigned Integers*
 #### UInt8Be
     {"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
 #### UInt16Be
