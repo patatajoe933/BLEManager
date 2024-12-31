@@ -150,7 +150,7 @@ This scenario demonstrates a powerful feature: using different descriptors (iden
 
 Descriptor values determine how characteristic values are interpreted and which graphical component is used for display. In BLE communication, the Little Endian format is typically used for interpreting characteristic values. However, all components interpreting multi-byte numbers also exist in a Big Endian variant. All components support notifications/indications from the device. If you are using notifications/indications, it may be necessary to enable MTU (Maximum Transmission Unit) negotiation in the application. The default MTU is 23 bytes. Notifications/Indications allow sending data of size MTU - 3. The "Negotiate Maximum MTU" setting allows, depending on the device, using an MTU of up to 517 bytes.
 
-<img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="60">
+<img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
 
 Descriptor values are in JSON format. Parsing is relatively lenient, however, property keys are case-sensitive. If a component has the option to limit the maximum and minimum values, the default setting corresponds to the maximum and minimum value of the given data type. For text, the default maximum value is 512 bytes. Every descriptor value contains the `order` property. `order` determines the display order in the application. If `order` is not set, the order is determined by the UUID value. Below are examples of individual settings with a description of their behavior.
 
