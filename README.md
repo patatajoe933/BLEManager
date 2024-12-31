@@ -49,6 +49,10 @@ In more advanced scenarios, different masks can be used to achieve more complex 
 
 ## Guide
 
+#### Examples
+
+- [Examples](Examples)
+
 This guide references examples primarily for the ESP32 microcontroller. However, it's important to understand that the BLE Manager application is designed to be versatile and can be used with any Bluetooth Low Energy (BLE) device, regardless of its underlying hardware or firmware.
 
 While the code examples will demonstrate how to set up custom descriptors on an ESP32, the core concept of using custom descriptors to define how characteristics are displayed and handled in the BLE Manager remains the same for all BLE devices.
@@ -63,8 +67,9 @@ Therefore, although the examples focus on ESP32, the information provided is app
 <img src="DocResources/Controls/Service_tabs.jpg" alt="Service Tabs" height="60">
 
 #### Examples
-- [Hello, World!](Examples/ESP32/ArduinoIDE/HelloWorld/HelloWorld/HelloWorld.ino)
-- [Multiple Services](Examples/ESP32/ArduinoIDE/HelloWorld/MultipleServices/MultipleServices.ino)
+
+- [HelloWorld.ino](Examples/ESP32/ArduinoIDE/HelloWorld/HelloWorld/HelloWorld.ino)
+- [MultipleServices.ino](Examples/ESP32/ArduinoIDE/HelloWorld/MultipleServices/MultipleServices.ino)
 
 
 In order for the BLE Manager application to display a user-friendly, human-readable name for a given service, that service must expose a specific characteristic. The *value* of this characteristic will then be used as the service's displayed name within the application.
@@ -87,6 +92,10 @@ A typical example of this JSON value is: `{"type":"serviceName", "order":1}`
 ### Describing a Characteristic
 
 <img src="DocResources/Controls/Text_field.jpg" alt="Text Field" height="60">
+
+#### Examples
+
+- [HelloWorld.ino](Examples/ESP32/ArduinoIDE/HelloWorld/HelloWorld/HelloWorld.ino)
 
 Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
 
@@ -111,6 +120,10 @@ If the characteristic's value is "Hello World!" and the above descriptor is appl
 
 
 ### Advanced Scenario
+
+#### Examples
+
+- [MultipleMasks.ino](Examples/ESP32/ArduinoIDE/Advanced/MultipleMasks/MultipleMasks.ino)
 
 You can safely skip this paragraph for now and return to it once you've tried the basic functions.
 
@@ -153,6 +166,11 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 
 <img src="DocResources/Controls/Service_tabs.jpg" alt="Service tabs" height="60">
 
+#### Examples
+
+- [HelloWorld.ino](Examples/ESP32/ArduinoIDE/HelloWorld/HelloWorld/HelloWorld.ino)
+- [MultipleServices.ino](Examples/ESP32/ArduinoIDE/HelloWorld/MultipleServices/MultipleServices.ino)
+
 #### Service Name
 
     {"type":"serviceName", "order":1}
@@ -181,7 +199,12 @@ This mechanism provides a user-friendly way to label and organize different BLE 
 
 <img src="DocResources/Controls/Texts.jpg" alt="Texts" height="240">
 
+#### Examples
+
+- [Texts.ino](Examples/ESP32/ArduinoIDE/AllControls/Texts/Texts.ino)
+
 *All text values are encoded using UTF-8*
+
 #### Text View
 
     {"type":"textView", "order":1, "disabled":false}
@@ -231,6 +254,10 @@ Editable text field for entering a numerical password (PIN). `maxBytes` allows l
 
 <img src="DocResources/Controls/Signed_integer.jpg" alt="Signed Integer" height="60">
 
+#### Examples
+
+- [SignedIntegers.ino](Examples/ESP32/ArduinoIDE/AllControls/SignedIntegers/SignedIntegers.ino)
+
 #### SInt8
 
     {"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
@@ -259,6 +286,10 @@ Editable field for 64-bit signed integer
 
 <img src="DocResources/Controls/SInt_slider.jpg" alt="Signed Integer Slider" height="60">
 
+#### Examples
+
+- [SignedIntegerSliders.ino](Examples/ESP32/ArduinoIDE/AllControls/SignedIntegerSliders/SignedIntegerSliders.ino)
+
 #### SInt8Slider
 
     {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
@@ -274,6 +305,10 @@ Slider for setting an 16-bit signed integer. The `stepInt` property determines t
 ### *Unsigned Integers*
 
 <img src="DocResources/Controls/Unsigned_integer.jpg" alt="Unsigned Integer" height="60">
+
+#### Examples
+
+- [UnsignedIntegers.ino](Examples/ESP32/ArduinoIDE/AllControls/UnsignedIntegers/UnsignedIntegers.ino)
 
 #### UInt8
 
@@ -303,6 +338,10 @@ Editable field for an 64-bit unsigned integer
 
 <img src="DocResources/Controls/UInt_slider.jpg" alt="Unsigned Integer Slider" height="60">
 
+#### Examples
+
+- [UnsignedIntegerSliders.ino](Examples/ESP32/ArduinoIDE/AllControls/UnsignedIntegerSliders/UnsignedIntegerSliders.ino)
+
 #### UInt8Slider
 
     {"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
@@ -318,6 +357,10 @@ Slider for setting an 16-bit unsigned integer. The `stepInt` property determines
 ### *Floats*
 
 <img src="DocResources/Controls/Float.jpg" alt="Float" height="60">
+
+#### Examples
+
+- [Floats.ino](Examples/ESP32/ArduinoIDE/AllControls/Floats/Floats.ino)
 
 #### Half
 
@@ -341,6 +384,10 @@ Editable field for a 64-bit float
 
 <img src="DocResources/Controls/Float_slider.jpg" alt="Float Slider" height="60">
 
+#### Examples
+
+- [FloatSliders.ino](Examples/ESP32/ArduinoIDE/AllControls/FloatSliders/FloatSliders.ino)
+
 #### HalfSlider
 
     {"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
@@ -356,6 +403,10 @@ Slider for setting a 32-bit float value. The `stepFloat` property determines the
 ### *Booleans*
 
 <img src="DocResources/Controls/Booleans.jpg" alt="Booleans" height="120">
+
+#### Examples
+
+- [Booleans.ino](Examples/ESP32/ArduinoIDE/AllControls/Booleans/Booleans.ino)
 
 #### Check
 
@@ -377,6 +428,10 @@ Switch for setting a boolean value of an 8-bit characteristic.
 
 <img src="DocResources/Controls/Button.jpg" alt="Button" height="60">
 
+#### Examples
+
+- [Button.ino](Examples/ESP32/ArduinoIDE/AllControls/Button/Button.ino)
+
 #### Button
 
     {"type":"button", "order":1, "disabled":false, "label":"Button"}
@@ -386,6 +441,10 @@ On each press, the value of an 8-bit unsigned integer is incremented by one. It 
 ### *Colors*
 
 <img src="DocResources/Controls/Color.jpg" alt="Color" height="60">
+
+#### Examples
+
+- [Color.ino](Examples/ESP32/ArduinoIDE/AllControls/Color/Color.ino)
 
 #### Color
 
@@ -398,6 +457,10 @@ The `alphaSlider` property determines whether the alpha channel slider is displa
 ### *Date and Time*
 
 <img src="DocResources/Controls/Date_Time.jpg" alt="Date and Time" height="240">
+
+#### Examples
+
+- [DateAndTime.ino](Examples/ESP32/ArduinoIDE/AllControls/DateAndTime/DateAndTime.ino)
 
 #### Time
 
@@ -433,6 +496,10 @@ Allows setting a 64-bit date and time. The value represents the number of second
 
 <img src="DocResources/Controls/Dropdown_field.jpg" alt="Dropdown" height="60">
 
+#### Examples
+
+- [Dropdown.ino](Examples/ESP32/ArduinoIDE/AllControls/Dropdown/Dropdown.ino)
+
 #### Dropdown
 
     {"type":"dropdown", "order":1, "disabled":false, label:"Dropdown Menu", "options":["Option1","Option2","Option3"]}
@@ -444,6 +511,11 @@ Allows selecting one of the text values from the options array.
 8-bit variants may seem redundant, but they exist for consistent data interpretation. Each integer component can process an arbitrarily long value by truncating it to the required number of bytes.
 
 ### *Big Endian Signed Integers*
+
+#### Examples
+
+- [SignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/SignedIntegersBigEndian/SignedIntegersBigEndian.ino)
+
 #### SInt8Be
     {"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
 #### SInt16Be
@@ -454,12 +526,22 @@ Allows selecting one of the text values from the options array.
     {"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
 ### *Big Endian Signed Integer Sliders*
+
+#### Examples
+
+- [SignedIntegerSlidersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/SignedIntegerSlidersBigEndian/SignedIntegerSlidersBigEndian.ino)
+
 #### SInt8SliderBe
     {"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
 #### SInt16SliderBe
     {"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
 ### *Big Endian Unsigned Integers*
+
+#### Examples
+
+- [UnsignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/UnsignedIntegersBigEndian/UnsignedIntegersBigEndian.ino)
+
 #### UInt8Be
     {"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
 #### UInt16Be
@@ -470,12 +552,22 @@ Allows selecting one of the text values from the options array.
     {"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
 ### *Big Endian Unsigned Integer Sliders*
+
+#### Examples
+
+- [UnsignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/UnsignedIntegerSlidersBigEndian/UnsignedIntegerSlidersBigEndian.ino)
+
 #### UInt8SliderBe
     {"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
 #### UInt16SliderBe
     {"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
 
 ### *Big Endian Floats*
+
+#### Examples
+
+- [Floats.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatsBigEndian/FloatsBigEndian.ino)
+
 #### HalfBe
     {"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
 #### FloatBe
@@ -484,12 +576,22 @@ Allows selecting one of the text values from the options array.
     {"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
 
 ### *Big Endian Float Sliders*
+
+#### Examples
+
+- [FloatSlidersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatSlidersBigEndian/FloatSlidersBigEndian.ino)
+
 #### HalfSliderBe
     {"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 #### FloatSliderBe
     {"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
 ### *Big Endian Date and Time*
+
+#### Examples
+
+- [DateAndTimeBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/DateAndTimeBigEndian/DateAndTimeBigEndian.ino)
+
 #### TimeBe
     {"type":"timebe", "order":1, "disabled":false, "label":"Time"}
 #### Date32Be
