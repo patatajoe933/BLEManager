@@ -1,111 +1,213 @@
 # BLE Manager
 
-Aplikace BLE Manager pro android umožňuje snadno spravovat hodnoty charakteristik Vašeho zařízení. Pro použití aplikace s vaším zařízením nepotřebujete žádná dodatečné knihovny. Stačí pouze charakteristiku označit descriptorem, který určí datový typ, požadovanou grafickou komponentu a další dodatečné vlastnosti, jako je například minimální a maximální hodnota. A to je vše. Po připojení aplikace k zařízení se takto označená charakteristika zobrazí v aplikaci.
+The BLE Manager application for Android makes it easy to manage the characteristics of your device. **No additional libraries** are required to use the app with your device. Simply annotate the characteristic with a descriptor specifying the data type, the desired graphical component, and additional properties such as minimum and maximum values. **That's it!** Once the application connects to your device, the described characteristic will appear in the app, allowing you to **read** and **set** its value. All components also support notifications and indications from the device.
 
-## Základní pojmy
+## Basic Concepts
 
-### Služba
-Jedná se o termín z BLE specifikace. Služba poskytuje charakteristiky. Každá služba může mít více charakteristik. V aplikaci se každá služba zobrazí jako tab.
+### Service
+This is a term from the BLE specification. A service provides characteristics, and each service can contain multiple characteristics. In the application, each service is displayed as a tab.
 
-### Charakteristika
-Charakteristiky jsou hodnoty, které služba poskytuje. Jde o pole bajtů, které musí klient (Aplikace) interpretovat.
+### Characteristic
+Characteristics are values provided by a service. They are byte arrays that must be interpreted by the client (application).
 
 ### Descriptor
-Hodnota descriptoru popisuje charakteristiku. Existují standardní typy descriptorů, pro BLE Manager však budeme potřebovat custom descriptor, kterým BLE Manageru řekneme, jak má hodnotu interpretovat a jakou grafickou komponentu má použít pro zobrazení. Pro hodnoty descriptru se v aplikaci BLE Manager používá formát JSON.
+A descriptor's value describes a characteristic. Standard descriptor types exist, but for BLE Manager, a custom descriptor is required to tell BLE Manager how to interpret the value and which UI component to use for display. The BLE Manager application uses JSON format for descriptor values.
 
-### Maska UUID descriptoru
-Aby aplikace poznala, který descriptor je ten správný custom descriptor, využívá masku descriptrou. Maska se nastavuje u každého zařízení. Může obsahovat hexadecimální číslice a `#`. Na místě `#` může být v UUID descriptoru libovolná číslice. Výchozí maska pro každé přidané zařízení je: `####face-####-####-####-############`. Takové masce vyhovuje například toto UUID `2000face-74ee-43ce-86b2-0dde20dcefd6`. V pokročilých scénářích můžete skrývat, nebo různě interpretovat hodnoty na základě rozdílných masek. 
 
-## Co tedy musíte udělat pro možnost použití vašeho zařízení v aplikaci BLE Manager?
+### Descriptor UUID Mask
 
- - Nastavit custom descriptor. To je vše.
+To uniquely identify the correct *custom descriptor* among potentially many descriptors associated with a characteristic, the BLE Manager application uses a *descriptor UUID mask*. This mask acts as a filter, allowing the application to quickly locate the specific descriptor it needs.
+
+The mask is configured individually for each connected device and can contain hexadecimal digits (0-9, A-F) and the `#` character. The `#` character serves as a wildcard, meaning it can represent any hexadecimal digit (0-9, A-F) in the descriptor UUID.
+
+The default mask for each newly added device is: `####face-####-####-####-############`. This mask indicates that the middle part of the UUID must be `face`, while the surrounding parts can be any hexadecimal digits.
+
+For example, the UUID `2000face-74ee-43ce-86b2-0dde20dcefd6` matches this default mask because it contains `face` in the correct position.
+
+In more advanced scenarios, different masks can be used to achieve more complex filtering or to handle different interpretations of the characteristic's value based on which descriptor is matched. This allows for flexibility in handling various device configurations and data formats.
+
+
+## What do you need to do to use your device with the BLE Manager application?
+
+ To make your Bluetooth Low Energy (BLE) device compatible with the BLE Manager application and display its characteristics correctly, you need to: 
  
- Tento ukázkový descriptor zajistí, že se charakteristika zobrazí v aplikaci jako textové pole. Pokud má charakteristika možnost zápisu a máte tuto možnost zakoupenu, pak bude textové pole editovatelné:
-```
-BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
-textDescriptor->setValue(
-    R"({"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80})"
-);
-pCharacteristicText->addDescriptor(textDescriptor);
-```  
-## Průvodce
-Všechny příklady, na které bude odkazováno, jsou určeny pro ESP32. Ale BLE manager lze použít s libovolným zařízením. 
+ - Configure a custom descriptor for each characteristic you want to manage.
+ 
+ This is the only required step on the device side. This example shows how to create a custom descriptor that will display the associated characteristic as a editable text field within the BLE Manager application.
 
-### Pojmenováváme službu
-Aby se v aplikaci zobrazil lidsky čitelný název služby, musí služba poskytovat charakteristku, jejíž hodnota se použije jako název. Takovou charakteristiku označíme descriptorem s UUID odpovídající masce a hodnotou ve formátu JSON. Například `{"type":"serviceName", "order":1}`
-Vlastnost `"type":"serviceName"` říká, že tato charakteristika se má interpretovat jako název služby. Vlastnost `"order":1` určuje pořadí zobrazení v aplikaci.
+	BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
+	textDescriptor->setValue(
+		R"({"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80})"
+	);
+	pCharacteristicText->addDescriptor(textDescriptor);
 
-### Popisujeme charakteristiku
-Pokud máme v zařízení například charakteristiku obsahující editovatelnou textovou hodnotu. Můžeme k ní přidat přidat descriptor s touto hodnotou: `{"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80}`
-Vlastnost `"type":"text"` říká, že se jedná o textovou hodnotu. Vlastnost `"order":1` určuje pořadí zobrazení v aplikaci. Vlastnost `"disabled":false` umožňuje řídit editovatelnost. Toto nastavení je však podřízeno možnostem charakteristiky. Pokud charakteristika není zapisovatelná, pak `"disabled":false` nebude mít efekt. Vlastnost `"label":"My Text Field Label"` určuje s jakým názvem se textové pole v aplikaci zobrazí. Vlastnost `"maxBytes": 80` omezuje maximální počet bajtů, které lze zapsat.
 
-### Pokročilý scénář
+## Guide
 
-Tento odstavec zatím klidně můžete přeskočit a vrátit se k němu, až si vyzkoušíte základní funkce.
-Představte si situaci, že máte termostat s připojením na WI-FI. Chcete, aby většina členů domácnosti mohla nastavovat pouze teplotu v určitém rozsahu, ale vy chcete mít možnost nastavovat také připojení k WI-FI a občas si trochu více přitopit :-). Můžete toho docílit tak, že si vytvoříte dva descriptory odpovídající různým maskám. Například `####fBce-####-####-####-############` a `####fAce-####-####-####-############`. Descriptorem s UUID odpovídající první masce popíšete všechny vlastnosti zařízení a tuto masku si nastavíte ve vaší aplikaci. Descriptorem odpovídající druhé masce popíšete pouze charakteristiku nastavující teplotu, přičemž hodnota descriptrou může určovat jiné limity pro tuto charakteristiku. Tuto masku nastavíte v aplikacích ostatních členů domácnosti, nebo nemusíte nastavovat nic, pokud pro tyto účely použijete výchozí masku.
+This guide references examples primarily for the ESP32 microcontroller. However, it's important to understand that the BLE Manager application is designed to be versatile and can be used with any Bluetooth Low Energy (BLE) device, regardless of its underlying hardware or firmware.
 
-### Hodnoty descriptoru
-Hodnoty descriptoru určují, jakým způsobem se intepretují hodnoty a jaká grafická komponenta se použije pro zobrazení.
-V BLE komunikaci se pro interpretaci hodnot charakteristik většinou používá formát Little Endian, nicméně všechny komponenty interpretující vícebajtová čísla existují i ve variantě Big Endian.
-Všechny komponenty podporují notifikace/indikace ze zařízení. V případě, že budete využívat notifikace/indikace, možná bude nutné v apliakci zapnout sjednání vyjednávání maximální MTU. Ve výchozím stavu je MTU 23 bajtů. Notifikace/Indikace umožňuje odeslat data o velikosti MTU - 3. Nastavení Vyjednat maximální MTU umožní v závislosti na zařízení použít MTU až 517 bajtů.
+While the code examples will demonstrate how to set up custom descriptors on an ESP32, the core concept of using custom descriptors to define how characteristics are displayed and handled in the BLE Manager remains the same for all BLE devices.
 
-### Seznam možných hodnot descriptoru
-Hodnoty descriptoru jsou ve formátu JSON. Parsování je poměrně benevoletní, nicméně klíče vlastností jsou case sensitive. Pokud má komponenta možnost omezení maximální a minimální hodnoty, výchozí nastavení odpovídá maximální a minimální hodnotě daného datového typu. U textu je výchozí maximální hodnota 512 bajtů. Každá hodnota descriptrou obsahuje vlastnost order. Order určuje pořadí zobrazení v aplikaci. Pokud není order nastaven, je pořadí určenou hodnotou UUID. Níže jsou uvedeny příklady jednotlivých nastavení s popisem chování.
+The key takeaway is that you only need to ensure your BLE device (whatever it may be) correctly implements the custom descriptors as described in this guide. The BLE Manager application will then be able to interpret the characteristics accordingly.
+
+Therefore, although the examples focus on ESP32, the information provided is applicable to any device that conforms to the BLE specification and correctly implements custom descriptors.
+
+
+### Naming a Service
+
+In order for the BLE Manager application to display a user-friendly, human-readable name for a given service, that service must expose a specific characteristic. The *value* of this characteristic will then be used as the service's displayed name within the application.
+
+To tell the BLE Manager application that a particular characteristic should be used for this purpose, we associate a *descriptor* with that characteristic. This descriptor has two key properties:
+
+1.  **UUID Matching a Mask:** The descriptor's UUID must conform to a predefined mask, ensuring the application can identify it as the "service name" descriptor.
+2.  **JSON Value:** The descriptor's value is a JSON string containing specific instructions.
+
+A typical example of this JSON value is: `{"type":"serviceName", "order":1}`
+
+**Explanation of the JSON properties:**
+
+*   `"type":"serviceName"`: This is the crucial property. It explicitly tells the BLE Manager application that the *value* of the associated characteristic should be interpreted and displayed as the name of the service.
+*   `"order":1`: This property determines the order in which this service (and its associated characteristics) are displayed within the application's user interface. A lower number means it will be displayed earlier in the list. This allows you to control the presentation of multiple services.
+
+**In summary:** By adding a descriptor with a UUID that matches the correct mask and the JSON value `{"type":"serviceName", "order":1}` to a characteristic, you effectively designate that characteristic as the source of the service's display name in the BLE Manager application. The actual name of the service will be the *value* of this characteristic (e.g., if the characteristic's value is "My Custom Service", that's what will be displayed in the app).
+
+
+### Describing a Characteristic
+
+Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and potentially edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
+
+Here's an example of such a JSON configuration: 
+`{"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80}`
+
+**Explanation of the JSON properties:**
+
+*   `"type":"text"`: This property tells the BLE Manager application that the characteristic's value should be treated as text and displayed as a text field.
+*   `"order":1`: This defines the display order of this characteristic relative to other characteristics of the same service. Lower numbers appear first.
+*   `"disabled":false`: This property controls whether the text field is editable in the application. Setting it to `false` *intends* to enable editing. However, there's an important caveat:
+    *   **Characteristic's Write Property Override:** The editability is ultimately determined by the characteristic's inherent properties. If the characteristic itself *does not* have the "write" permission enabled (meaning it's a read-only characteristic), then setting `"disabled":false` in the descriptor will have *no effect*. The text field will still be displayed as read-only.
+*   `"label":"My Text Field Label"`: This sets the label that will be displayed next to the text field in the application, providing context for the user.
+*   `"maxBytes": 80`: This sets the maximum number of bytes that can be written to the characteristic through the text field in the application. This helps prevent buffer overflows and ensures data integrity.
+
+**Example scenario:**
+
+If the characteristic's value is "Hello World!" and the above descriptor is applied, the BLE Manager app will display a text field labeled "My Text Field Label" containing "Hello World!". If the characteristic is writable, the user can edit the text within the 80-byte limit. If the characteristic is read-only, the user will only be able to view the text.
+
+**Key takeaway:** The descriptor provides instructions to the BLE Manager application on how to present the characteristic's data. However, the characteristic's fundamental properties (like writability) always take precedence.
+
+
+### Advanced Scenario
+
+You can safely skip this paragraph for now and return to it once you've tried the basic functions.
+
+Imagine a situation where you have a thermostat with a Wi-Fi connection. You want most household members to be able to adjust the temperature within a certain range, but you want to have the ability to also configure the Wi-Fi connection and occasionally heat the place up a bit more :-). You can achieve this by creating two descriptors with UUIDs matching different masks. For example, `####fBce-####-####-####-############` and `####fAce-####-####-####-############`.
+
+Using a descriptor with a UUID matching the first mask (`####fBce-####-####-####-############`), you describe all the device's properties, and you set this mask in *your* application. Using a descriptor with a UUID matching the second mask (`####fAce-####-####-####-############`), you describe *only* the temperature setting characteristic, and the descriptor's value can define different limits for this characteristic. You would set this second mask in the applications of other household members, or you don't have to set anything if you use the default mask for these purposes.
+
+**Explanation and Key Takeaways:**
+
+This scenario demonstrates a powerful feature: using different descriptors (identified by distinct UUIDs based on different masks) to provide different levels of access and control to the same BLE device.
+
+*   **Mask 1 (`####fBce-####-####-####-############`): Full Control:** This mask is used in *your* application to expose all functionalities of the thermostat, including Wi-Fi configuration and wider temperature control. The descriptor associated with a UUID matching this mask would contain JSON describing all characteristics and their full capabilities.
+
+*   **Mask 2 (default) (`####fAce-####-####-####-############`): Limited Control:** This mask is used in other household members' applications. The descriptor associated with a UUID matching this mask *only* describes the temperature setting characteristic and might include specific limits (e.g., a narrower temperature range).
+
+**Benefits:**
+
+*   **Granular Access Control:** You can precisely control which features are accessible to different users.
+*   **Simplified User Interface:** Other users' apps can have a simpler UI that only shows the essential temperature controls.
+*   **Security:** By limiting access, you prevent accidental or unauthorized changes to critical settings like Wi-Fi configuration.
+
+
+## Descriptor Values
+
+Descriptor values determine how characteristic values are interpreted and which graphical component is used for display. In BLE communication, the Little Endian format is typically used for interpreting characteristic values. However, all components interpreting multi-byte numbers also exist in a Big Endian variant. All components support notifications/indications from the device. If you are using notifications/indications, it may be necessary to enable MTU (Maximum Transmission Unit) negotiation in the application. The default MTU is 23 bytes. Notifications/Indications allow sending data of size MTU - 3. The "Negotiate Maximum MTU" setting allows, depending on the device, using an MTU of up to 517 bytes.
+
+
+### List of Possible Descriptor Values
+
+Descriptor values are in JSON format. Parsing is relatively lenient, however, property keys are case-sensitive. If a component has the option to limit the maximum and minimum values, the default setting corresponds to the maximum and minimum value of the given data type. For text, the default maximum value is 512 bytes. Every descriptor value contains the `order` property. `order` determines the display order in the application. If `order` is not set, the order is determined by the UUID value. Below are examples of individual settings with a description of their behavior.
+
+**Detailed Explanation:**
+
+*   **JSON Format and Case Sensitivity:** Descriptor configurations are defined using JSON. While the parser is tolerant to some variations in formatting, it's crucial to remember that property keys (like `"type"`, `"order"`, `"minInt"`, `"maxInt"`, etc.) are case-sensitive. `"Type"` or `"ORDER"` will not be recognized.
+
+*   **Default Min/Max Values:** For components that support minimum and maximum value constraints (e.g., numeric types), the default values are set to the natural minimum and maximum limits of the underlying data type. For example, if you're using a 16-bit integer, the default `min` would be -32768 and the default `max` would be 32767.
+
+*   **Default Max Length for Text:** For text fields, if you don't specify a `"maxBytes"` property, the default maximum length is 512 bytes.
+
+*   **`order` Property:** The `order` property is crucial for controlling the display order of characteristics and their associated descriptors within the application's user interface. It's an integer value. Lower numbers are displayed first.
+
 #### *Tab Headers*
-#### Název služby
+#### Service Name
 
-    {"type":"serviceName", "order":1}
+    `{"type":"serviceName", "order":1}`
 
-Descriptorem s touto hodnotou označíme charakteristiku, jejíž hodnota se bude interpretovat jako text a použije se pro název tabu v aplikaci. Každá služba může obsahovat jednu takto popsanou charakteristiku.
+A descriptor with this value marks a characteristic whose value will be interpreted as text and used for the tab name in the application. Each service can contain one such described characteristic.
+
+**Detailed Explanation:**
+
+This section describes how to define the name of a tab in the application, which typically represents a BLE service. This is achieved by adding a specific descriptor to a characteristic within that service.
+
+*   **JSON Configuration:** The descriptor's configuration is defined using a JSON object: `{"type":"serviceName", "order":1}`
+
+*   **`"type":"serviceName"`:** This is the key property. It tells the application that the *value* of the associated characteristic should be used as the name for the tab representing the service.
+
+*   **`"order":1`:** This property determines the order in which the tabs are displayed in the application's user interface. Lower numbers are displayed first. Since this descriptor is specifically for the service name/tab header, it's common to use `order: 1` to ensure it's displayed first among other potential descriptors for the same service.
+
+**Example:**
+
+Let's say a BLE service has a characteristic with the value "Heart Rate Monitor". If that characteristic has a descriptor configured as `{"type":"serviceName", "order":1}`, then the application will create a tab labeled "Heart Rate Monitor".
+
+**Why this is important:**
+
+This mechanism provides a user-friendly way to label and organize different BLE services within the application's interface. Instead of displaying cryptic UUIDs, users see descriptive names for each service, making it easier to interact with the device.
+
 #### *Texts*
+*All text values are encoded using UTF-8*
 #### Text View
 
-    {"type":"textView", "order":1, "disabled":false}
+    `{"type":"textView", "order":1, "disabled":false}`
 
-Hodnota takto popsané charakteristiky bude interpretována jako text a zobrazena jen pro čtení.
+The value of a characteristic described in this way will be interpreted as text and displayed for reading only.
 
 #### Title
 
-    {"type":"titleView", "order":1, "disabled":false}
+    `{"type":"titleView", "order":1, "disabled":false}`
 
-Hodnota takto popsané charakteristiky bude interpretována jako text a zobrazena větším písmem jen pro čtení.
+The value of a characteristic described in this way will be interpreted as text and displayed in a larger font for reading only.
 
 #### Rich Text View
 
     {"type":"richTextView", "order":1, "disabled":false}
 
-Hodnota této charakteristky bude interpretována jako text ve formátu JSON a zobrazena jen pro čtení.
+The value of this characteristic will be interpreted as JSON-formatted text and displayed for reading only.
 
     {"text":"Colored Text", "color":"#000000", "background":"#F2E605", "title":true}
 
-Hodnota charakteristkiy může mít tyto vlastnosti:
-**text**
-Zobrazený text
-**color**
-Barva textu.
-Možné formáty: #RRGGBB nebo #AARRGGBB 
-**background**
-Barva pozadí textu
-**title**
-Pokud je `true`, bude použito větší písmo.
+The characteristic's value can have these properties:
+
+*   **text:** The displayed text.
+*   **color:** The text color. Possible formats: `#RRGGBB` or `#AARRGGBB`.
+*   **background:** The text background color.
+*   **title:** If `true`, a larger font will be used.
 
 #### Text
 
     {"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 30}
 
-Zapisovatelné textové pole. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
+Editable text field. `maxBytes` allows limiting the maximum number of _bytes_ entered (not the number of characters). The maximum that can be entered is 512 bytes.
 
 #### Password
 
     {"type":"password", "order":1, "disabled":false, label:"Pasword Field Label", "maxBytes": 30}
 
-Zapisovatelné textové pole pro zadání hesla. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
+Editable text field for entering a password. `maxBytes` allows limiting the maximum number of bytes entered (not the number of characters). The maximum that can be entered is 512 bytes.
 
 #### PIN
 
     {"type":"pin", "order":1, "disabled":false, label:"PIN Field Label", "maxBytes": 30}
 
-Zapisovatelné textové pole pro zadání číselného hesla. maxBytes umožňuje omezit maximální počet zadaných bajtů (ne počet znaků). Maximálně je možné zadat 512 bajtů. Používá kódování se UTF-8.
+Editable text field for entering a numerical password (PIN). `maxBytes` allows limiting the maximum number of bytes entered (not the number of characters). The maximum that can be entered is 512 bytes.
 
 #### *Signed Integers*
 
@@ -113,25 +215,25 @@ Zapisovatelné textové pole pro zadání číselného hesla. maxBytes umožňuj
 
     {"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
     
-Zapisovatelné pole pro 8bitový signed integer.
+Editable field for 8-bit signed integer
 
 #### SInt16
 
     {"type":"sint16", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
 
-Zapisovatelné pole pro 16bitový signed integer.
+Editable field for 16-bit signed integer
 
 #### SInt32
 
     {"type":"sint32", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
 
-Zapisovatelné pole pro 32bitový signed integer.
+Editable field for 32-bit signed integer
 
 #### SInt64
 
     {"type":"sint64", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
-Zapisovatelné pole pro 64bitový signed integer.
+Editable field for 64-bit signed integer
 
 #### *Signed Integer Sliders*
 
@@ -139,38 +241,39 @@ Zapisovatelné pole pro 64bitový signed integer.
 
     {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
 
-Slider pro nastavení 8bitového signed integeru. Vlastnot stepInt určuje velikost kroku.
+Slider for setting an 8-bit signed integer. The `stepInt` property determines the step size.
 
 #### SInt16Slider
 
     {"type":"sint16slider", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
-Slider pro nastavení 16bitového signed integeru. Vlastnot stepInt určuje velikost kroku.
+Slider for setting an 16-bit signed integer. The `stepInt` property determines the step size.
 
 #### *Unsigned Integers*
+
 #### UInt8
 
     {"type":"uint8", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
 
-Zapisovatelné pole pro 8bitový unsigned integer.
+Editable field for an 8-bit unsigned integer
 
 #### UInt16
 
     {"type":"uint16", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
 
-Zapisovatelné pole pro 16bitový unsigned integer.
+Editable field for an 16-bit unsigned integer
 
 #### UInt32
 
     {"type":"uint32", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
 
-Zapisovatelné pole pro 32bitový unsigned integer.
+Editable field for an 32-bit unsigned integer
 
 #### UInt64
 
     {"type":"uint64", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
-Zapisovatelné pole pro 64bitový unsigned integer.
+Editable field for an 64-bit unsigned integer
 
 #### *Unsigned Integer Sliders*
 
@@ -178,13 +281,13 @@ Zapisovatelné pole pro 64bitový unsigned integer.
 
     {"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
 
-Slider pro nastavení 8bitového unsigned integeru. Vlastnot stepInt určuje velikost kroku.
+Slider for setting an 8-bit unsigned integer. The `stepInt` property determines the step size.
 
 #### UInt16Slider
 
     {"type":"uint16slider", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100, "stepInt":1}
 
-Slider pro nastavení 16bitového unsigned integeru. Vlastnot stepInt určuje velikost kroku.
+Slider for setting an 16-bit unsigned integer. The `stepInt` property determines the step size.
 
 #### *Floats*
 
@@ -192,19 +295,19 @@ Slider pro nastavení 16bitového unsigned integeru. Vlastnot stepInt určuje ve
 
     {"type":"half", "order":1, "disabled":false, "label":"Float 16", "minFloat": -100, "maxFloat": 100}
 
-Zapisovatelné pole pro 16bitový float.
+Editable field for a 16-bit float
 
 #### Float
 
     {"type":"float", "order":1, "disabled":false, label:"Float 32", "minFloat": -100, "maxFloat": 100}
 
-Zapisovatelné pole pro 32bitový float.
+Editable field for a 32-bit float
 
 #### Double
 
     {"type":"double", "order":1, "disabled":false, label:"Float 64", "minFloat": -100, "maxFloat": 100}
 
-Zapisovatelné pole pro 64bitový float.
+Editable field for a 64-bit float
 
 #### *Float Sliders*
 
@@ -212,13 +315,13 @@ Zapisovatelné pole pro 64bitový float.
 
     {"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
-Slider pro nastavení hodnoty 16bitového float. Vlastnot stepFloat určuje velikost kroku.
+Slider for setting a 16-bit float value. The `stepFloat` property determines the step size.
 
 #### FloatSlider
 
     {"type":"floatslider", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
-Slider pro nastavení hodnoty 32bitového float. Vlastnot stepFloat určuje velikost kroku.
+Slider for setting a 32-bit float value. The `stepFloat` property determines the step size
 
 #### *Booleans*
 
@@ -226,27 +329,28 @@ Slider pro nastavení hodnoty 32bitového float. Vlastnot stepFloat určuje veli
 
     {"type":"check", "order":1, "disabled":false, label:"Checkbox"}
 
-Checkbox pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false, jinak true. Zapisuje false = 0, true = 1 
+Checkbox for setting a boolean value of an 8-bit characteristic. Reads 0 = false, otherwise true. Writes false = 0, true = 1.
 
 #### Switch
 
     {"type":"switch", "order":1, "disabled":false, label:"Switch"}
 
-Switch pro nastavení boolean hodnoty 8bitové charakteristiky. Čte 0 = false, jinak true. Zapisuje false = 0, true = 1 
+Switch for setting a boolean value of an 8-bit characteristic. Reads 0 = false, otherwise true. Writes false = 0, true = 1.
+
 #### *Actions*
 #### Button
 
     {"type":"button", "order":1, "disabled":false, "label":"Button"}
 
-Pos stisknutí nastaví hodnotu 8bitového unsigned integeru na hodnotu o jedna vyšší. Začíná na 0.
+On each press, the value of an 8-bit unsigned integer is incremented by one. It starts at 0.
 
 #### *Colors*
 #### Color
 
     {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
 
-Colorpicker pro výběr barvy. Pracuje s 32bitovou ABGR hodnotou, kde R je uložno na 1. bajtu. 0xFF05E6F2; //R:0xF2, G:0xE6, B:0x05, A:0xFF
-Vlastnost alphaSlider určuje, zda se zobrazí slider pro nastavení alfa kanálu.
+Colorpicker for color selection. Works with a 32-bit ABGR value, where R is stored in the 1st byte. 0xFF05E6F2; //R:0xF2, G:0xE6, B:0x05, A:0xFF
+The alphaSlider property determines whether the alpha channel slider is displayed.
 
 #### *Date and Time*
 
@@ -254,40 +358,41 @@ Vlastnost alphaSlider určuje, zda se zobrazí slider pro nastavení alfa kanál
 
     {"type":"time", "order":1, "disabled":false, "label":"Time"}
 
-Umožňuje nastavit čas jako 32bitový unsigned integer. Hodnota udává počet sekund od půlnoci.
+Allows setting time as a 32-bit unsigned integer. The value represents the number of seconds since midnight.
 
 #### Date32
 
     {"type":"date32", "order":1, "disabled":false, "label":"Date 32"}
 
-Umožňuje nastavit 32bitové datum. Hodnota určuje počet sekund od začátku Unix epochy. Čas je vždy 0:00.
+Allows setting a 32-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always 0:00.
 
 #### Date64
 
     {"type":"date64", "order":1, "disabled":false, "label":"Date 64"}
 
-Umožňuje nastavit 64bitové datum. Hodnota určuje počet sekund od začátku Unix epochy. Čas je vždy 0:00.
+Allows setting a 64-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always 0:00.
 
 #### DateTime32
 
     {"type":"datetime32", "order":1, "disabled":false, "label":"DateTime 32"}
 
-Umožňuje nastavit 32bitový datum a čas. Hodnota určuje počet sekund od začátku Unix epochy.
+Allows setting a 32-bit date and time. The value represents the number of seconds since the beginning of the Unix epoch.
 
 #### DateTime64
 
     {"type":"datetime64", "order":1, "disabled":false, "label":"DateTime 64"}
 
-Umožňuje nastavit 32bitový datum a čas. Hodnota určuje počet sekund od začátku Unix epochy.
+Allows setting a 64-bit date and time. The value represents the number of seconds since the beginning of the Unix epoch.
 
 #### Dropdown
 
     {"type":"dropdown", "order":1, "disabled":false, label:"Dropdown Menu", "options":["Option1","Option2","Option3"]}
 
-Umožňuje výběr jedné z textových hodnot z pole options.
+Allows selecting one of the text values from the options array.
 
-### BigEndian varianty komponent
-8bitové varinty se mohou zdát jako nadbytečné, ale jsou zde z důvodu konzistentní interpretace dat. Každá integer komponenta dokáže totiž zpravocat libovolně dlouhou hodnotu tak, že ji ořízne na požadovaný počet bajtů.
+### BigEndian component variants
+
+8-bit variants may seem redundant, but they exist for consistent data interpretation. Each integer component can process an arbitrarily long value by truncating it to the required number of bytes.
 
 #### *Big Endian Signed Integers*
 #### SInt8Be
@@ -346,7 +451,3 @@ Umožňuje výběr jedné z textových hodnot z pole options.
     {"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
 #### DateTime64Be
     {"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
-
-
-
-  
