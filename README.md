@@ -58,7 +58,7 @@ Therefore, although the examples focus on ESP32, the information provided is app
 
 
 ### Naming a Service
-
+[Hello, World!](Examples/ESP32/ArduinoIDE/HelloWorld/HelloWorld/HelloWorld.ino)
 <img src="DocResources/Controls/Service_tabs.jpg" alt="Service Tabs" height="60">
 
 In order for the BLE Manager application to display a user-friendly, human-readable name for a given service, that service must expose a specific characteristic. The *value* of this characteristic will then be used as the service's displayed name within the application.
