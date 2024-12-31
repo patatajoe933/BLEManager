@@ -59,7 +59,7 @@ Therefore, although the examples focus on ESP32, the information provided is app
 
 ### Naming a Service
 
-<img src="DocResources/Controls/Service_tabs.jpg" alt="Service tabs" height="60">
+<img src="DocResources/Controls/Service_tabs.jpg" alt="Service Tabs" height="60">
 
 In order for the BLE Manager application to display a user-friendly, human-readable name for a given service, that service must expose a specific characteristic. The *value* of this characteristic will then be used as the service's displayed name within the application.
 
@@ -79,12 +79,14 @@ A typical example of this JSON value is: `{"type":"serviceName", "order":1}`
 
 
 ### Describing a Characteristic
-![Text Field](DocResources/Controls/Text_field.jpg)
+
+<img src="DocResources/Controls/Text_field.jpg" alt="Text Field" height="60">
+
 Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
 
 Here's an example of such a JSON configuration:
 
-`{"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 80}`
+    {"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 80}
 
 **Explanation of the JSON properties:**
 
@@ -143,7 +145,7 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 
 #### *Tab Headers*
 
-![Service tabs](DocResources/Controls/Service_tabs.jpg)
+<img src="DocResources/Controls/Service_tabs.jpg" alt="Service tabs" height="60">
 
 #### Service Name
 
@@ -171,7 +173,7 @@ This mechanism provides a user-friendly way to label and organize different BLE 
 
 #### *Texts*
 
-![Service tabs](DocResources/Controls/Texts.jpg)
+<img src="DocResources/Controls/Texts.jpg" alt="Texts" height="240">
 
 *All text values are encoded using UTF-8*
 #### Text View
@@ -221,7 +223,7 @@ Editable text field for entering a numerical password (PIN). `maxBytes` allows l
 
 #### *Signed Integers*
 
-![Service tabs](DocResources/Controls/Signed_integer.jpg)
+<img src="DocResources/Controls/Signed_integer.jpg" alt="Signed Integer" height="60">
 
 #### SInt8
 
@@ -249,7 +251,7 @@ Editable field for 64-bit signed integer
 
 #### *Signed Integer Sliders*
 
-![Service tabs](DocResources/Controls/SInt_slider.jpg)
+<img src="DocResources/Controls/SInt_slider.jpg" alt="Signed Integer Slider" height="60">
 
 #### SInt8Slider
 
@@ -265,7 +267,7 @@ Slider for setting an 16-bit signed integer. The `stepInt` property determines t
 
 #### *Unsigned Integers*
 
-![Service tabs](DocResources/Controls/Unsigned_integer.jpg)
+<img src="DocResources/Controls/Unsigned_integer.jpg" alt="Unsigned Integer" height="60">
 
 #### UInt8
 
@@ -293,7 +295,7 @@ Editable field for an 64-bit unsigned integer
 
 #### *Unsigned Integer Sliders*
 
-![Service tabs](DocResources/Controls/UInt_slider.jpg)
+<img src="DocResources/Controls/UInt_slider.jpg" alt="Unsigned Integer Slider" height="60">
 
 #### UInt8Slider
 
@@ -309,7 +311,7 @@ Slider for setting an 16-bit unsigned integer. The `stepInt` property determines
 
 #### *Floats*
 
-![Service tabs](DocResources/Controls/Float.jpg)
+<img src="DocResources/Controls/Float.jpg" alt="Float" height="60">
 
 #### Half
 
@@ -331,7 +333,7 @@ Editable field for a 64-bit float
 
 #### *Float Sliders*
 
-![Service tabs](DocResources/Controls/Float_slider.jpg)
+<img src="DocResources/Controls/Float_slider.jpg" alt="Float Slider" height="60">
 
 #### HalfSlider
 
@@ -347,7 +349,7 @@ Slider for setting a 32-bit float value. The `stepFloat` property determines the
 
 #### *Booleans*
 
-![Service tabs](DocResources/Controls/Booleans.jpg)
+<img src="DocResources/Controls/Booleans.jpg" alt="Booleans" height="120">
 
 #### Check
 
@@ -367,7 +369,7 @@ Switch for setting a boolean value of an 8-bit characteristic.
 
 #### *Actions*
 
-![Service tabs](DocResources/Controls/Button.jpg)
+<img src="DocResources/Controls/Button.jpg" alt="Button" height="60">
 
 #### Button
 
@@ -377,7 +379,7 @@ On each press, the value of an 8-bit unsigned integer is incremented by one. It 
 
 #### *Colors*
 
-![Service tabs](DocResources/Controls/Color.jpg)
+<img src="DocResources/Controls/Color.jpg" alt="Color" height="60">
 
 #### Color
 
@@ -389,7 +391,7 @@ The `alphaSlider` property determines whether the alpha channel slider is displa
 
 #### *Date and Time*
 
-![Service tabs](DocResources/Controls/Date_Time.jpg)
+<img src="DocResources/Controls/Date_Time.jpg" alt="Date and Time" height="240">
 
 #### Time
 
@@ -423,7 +425,7 @@ Allows setting a 64-bit date and time. The value represents the number of second
 
 #### *Selection from multiple options*
 
-![Service tabs](DocResources/Controls/Dropdown.jpg)
+<img src="DocResources/Controls/Dropdown_field.jpg" alt="Dropdown" height="60">
 
 #### Dropdown
 
