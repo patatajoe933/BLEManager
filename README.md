@@ -1,6 +1,6 @@
 # BLE Manager
 
-The BLE Manager application for Android makes it easy to manage the characteristics of your device. **No additional libraries** are required to use the app with your device. Simply annotate the characteristic with a descriptor specifying the data type, the desired graphical component, and additional properties such as minimum and maximum values. **That's it!** Once the application connects to your device, the described characteristic will appear in the app, allowing you to **read** and **set** its value. All components also support notifications and indications from the device.
+The BLE Manager application for Android makes it easy to manage the characteristics of your device. **No additional libraries** are required to use the app with your device. **Simply annotate the characteristic with a descriptor** specifying the data type, the desired graphical component, and additional properties such as minimum and maximum values. **That's it!** Once the application connects to your device, the described characteristic will appear in the app, allowing you to **read** and **set** its value. All components also support notifications and indications from the device.
 
 ## Basic Concepts
 
@@ -8,9 +8,11 @@ The BLE Manager application for Android makes it easy to manage the characterist
 This is a term from the BLE specification. A service provides characteristics, and each service can contain multiple characteristics. In the application, each service is displayed as a tab.
 
 ### Characteristic
+
 Characteristics are values provided by a service. They are byte arrays that must be interpreted by the client (application).
 
 ### Descriptor
+
 A descriptor's value describes a characteristic. Standard descriptor types exist, but for BLE Manager, a custom descriptor is required to tell BLE Manager how to interpret the value and which UI component to use for display. The BLE Manager application uses JSON format for descriptor values.
 
 
@@ -31,7 +33,7 @@ In more advanced scenarios, different masks can be used to achieve more complex 
 
  To make your Bluetooth Low Energy (BLE) device compatible with the BLE Manager application and display its characteristics correctly, you need to: 
  
- - Configure a custom descriptor for each characteristic you want to manage.
+ - **Configure a custom descriptor for each characteristic you want to manage.**
  
  This is the only required step on the device side. This example shows how to create a custom descriptor that will display the associated characteristic as a editable text field within the BLE Manager application.
 
@@ -146,13 +148,13 @@ A descriptor with this value marks a characteristic whose value will be interpre
 
 **Detailed Explanation:**
 
-This section describes how to define the name of a tab in the application, which typically represents a BLE service. This is achieved by adding a specific descriptor to a characteristic within that service.
+This section describes how to define the name of a tab in the application, which represents a BLE service. This is achieved by adding a specific descriptor to a characteristic within that service.
 
 *   **JSON Configuration:** The descriptor's configuration is defined using a JSON object: `{"type":"serviceName", "order":1}`
 
 *   **`"type":"serviceName"`:** This is the key property. It tells the application that the *value* of the associated characteristic should be used as the name for the tab representing the service.
 
-*   **`"order":1`:** This property determines the order in which the tabs are displayed in the application's user interface. Lower numbers are displayed first. Since this descriptor is specifically for the service name/tab header, it's common to use `order: 1` to ensure it's displayed first among other potential descriptors for the same service.
+*   **`"order":1`:** This property determines the order in which the tabs are displayed in the application's user interface. Lower numbers are displayed first.
 
 **Example:**
 
@@ -166,13 +168,13 @@ This mechanism provides a user-friendly way to label and organize different BLE 
 *All text values are encoded using UTF-8*
 #### Text View
 
-    `{"type":"textView", "order":1, "disabled":false}`
+    {"type":"textView", "order":1, "disabled":false}
 
 The value of a characteristic described in this way will be interpreted as text and displayed for reading only.
 
 #### Title
 
-    `{"type":"titleView", "order":1, "disabled":false}`
+    {"type":"titleView", "order":1, "disabled":false}
 
 The value of a characteristic described in this way will be interpreted as text and displayed in a larger font for reading only.
 
@@ -321,7 +323,7 @@ Slider for setting a 16-bit float value. The `stepFloat` property determines the
 
     {"type":"floatslider", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
-Slider for setting a 32-bit float value. The `stepFloat` property determines the step size
+Slider for setting a 32-bit float value. The `stepFloat` property determines the step size.
 
 #### *Booleans*
 
@@ -329,28 +331,33 @@ Slider for setting a 32-bit float value. The `stepFloat` property determines the
 
     {"type":"check", "order":1, "disabled":false, label:"Checkbox"}
 
-Checkbox for setting a boolean value of an 8-bit characteristic. Reads 0 = false, otherwise true. Writes false = 0, true = 1.
+Checkbox for setting a boolean value of an 8-bit characteristic.
+- Reads `0 = false, otherwise true`
+- Writes `false = 0, true = 1`
 
 #### Switch
 
     {"type":"switch", "order":1, "disabled":false, label:"Switch"}
 
-Switch for setting a boolean value of an 8-bit characteristic. Reads 0 = false, otherwise true. Writes false = 0, true = 1.
+Switch for setting a boolean value of an 8-bit characteristic.
+- Reads `0 = false, otherwise true`
+- Writes `false = 0, true = 1`
 
 #### *Actions*
 #### Button
 
     {"type":"button", "order":1, "disabled":false, "label":"Button"}
 
-On each press, the value of an 8-bit unsigned integer is incremented by one. It starts at 0.
+On each press, the value of an 8-bit unsigned integer is incremented by one. It starts at `0`.
 
 #### *Colors*
 #### Color
 
     {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
 
-Colorpicker for color selection. Works with a 32-bit ABGR value, where R is stored in the 1st byte. 0xFF05E6F2; //R:0xF2, G:0xE6, B:0x05, A:0xFF
-The alphaSlider property determines whether the alpha channel slider is displayed.
+Colorpicker for color selection. Works with a 32-bit *ABGR* value, where *R* is stored in the 1st byte.
+*For 0xFF05E6F2 is A:0xFF, B:0x05, G:0xE6, R:0xF2*
+The `alphaSlider` property determines whether the alpha channel slider is displayed.
 
 #### *Date and Time*
 
@@ -364,13 +371,13 @@ Allows setting time as a 32-bit unsigned integer. The value represents the numbe
 
     {"type":"date32", "order":1, "disabled":false, "label":"Date 32"}
 
-Allows setting a 32-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always 0:00.
+Allows setting a 32-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always `0:00`.
 
 #### Date64
 
     {"type":"date64", "order":1, "disabled":false, "label":"Date 64"}
 
-Allows setting a 64-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always 0:00.
+Allows setting a 64-bit date. The value represents the number of seconds since the beginning of the Unix epoch. The time is always `0:00`.
 
 #### DateTime32
 
