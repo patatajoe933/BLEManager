@@ -265,7 +265,7 @@ Slider for setting an 8-bit signed integer. The `stepInt` property determines th
 
 Slider for setting an 16-bit signed integer. The `stepInt` property determines the step size.
 
-#### *Unsigned Integers*
+### *Unsigned Integers*
 
 <img src="DocResources/Controls/Unsigned_integer.jpg" alt="Unsigned Integer" height="60">
 
