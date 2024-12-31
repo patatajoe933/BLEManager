@@ -151,7 +151,7 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 
     {"type":"serviceName", "order":1}
 
-A descriptor with this value marks a characteristic whose value will be interpreted as text and used for the tab name in the application. Each service can contain one such described characteristic.
+A descriptor with this value marks a characteristic whose value will be interpreted as text and used for the *tab name* in the application. Each service can contain one such described characteristic.
 
 **Detailed Explanation:**
 
