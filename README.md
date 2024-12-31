@@ -1,3 +1,5 @@
+***The application will be publicly available soon. If you would like to participate in closed testing, please contact me at petr.satka@gmail.com.***
+
 # BLE Manager
 
 The BLE Manager application for Android makes it easy to manage the characteristics of your device. **No additional libraries** are required to use the app with your device. **Simply annotate the characteristic with a descriptor** specifying the data type, the desired graphical component, and additional properties such as minimum and maximum values. **That's it!** Once the application connects to your device, the described characteristic will appear in the app, allowing you to **read** and **set** its value. All components also support notifications and indications from the device.
