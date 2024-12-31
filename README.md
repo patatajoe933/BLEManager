@@ -31,6 +31,7 @@ For example, the UUID `2000face-74ee-43ce-86b2-0dde20dcefd6` matches this defaul
 
 In more advanced scenarios, different masks can be used to achieve more complex filtering or to handle different interpretations of the characteristic's value based on which descriptor is matched. This allows for flexibility in handling various device configurations and data formats.
 
+<img src="DocResources/Controls/Device_settings.jpg" alt="Mask Settings" height="240">
 
 ## What do you need to do to use your device with the BLE Manager application?
 
@@ -147,7 +148,7 @@ This scenario demonstrates a powerful feature: using different descriptors (iden
 
 ## Descriptor Values
 
-Descriptor values determine how characteristic values are interpreted and which graphical component is used for display. In BLE communication, the Little Endian format is typically used for interpreting characteristic values. However, all components interpreting multi-byte numbers also exist in a Big Endian variant. All components support notifications/indications from the device. If you are using notifications/indications, it may be necessary to enable MTU (Maximum Transmission Unit) negotiation in the application. The default MTU is 23 bytes. Notifications/Indications allow sending data of size MTU - 3. The "Negotiate Maximum MTU" setting allows, depending on the device, using an MTU of up to 517 bytes.
+Descriptor values determine how characteristic values are interpreted and which graphical component is used for display. In BLE communication, the Little Endian format is typically used for interpreting characteristic values. However, all components interpreting multi-byte numbers also exist in a Big Endian variant. All components support notifications/indications from the device. If you are using notifications/indications, it may be necessary to enable MTU (Maximum Transmission Unit) negotiation in the application. The default MTU is 23 bytes. Notifications/Indications allow sending data of size MTU - 3. The "Negotiate Maximum MTU" setting allows, depending on the device, using an MTU of up to 517 bytes. <img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="60">
 
 Descriptor values are in JSON format. Parsing is relatively lenient, however, property keys are case-sensitive. If a component has the option to limit the maximum and minimum values, the default setting corresponds to the maximum and minimum value of the given data type. For text, the default maximum value is 512 bytes. Every descriptor value contains the `order` property. `order` determines the display order in the application. If `order` is not set, the order is determined by the UUID value. Below are examples of individual settings with a description of their behavior.
 
