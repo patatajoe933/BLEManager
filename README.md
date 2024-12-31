@@ -163,6 +163,7 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 *   **Default Max Length for Text:** For text fields, if you don't specify a `"maxBytes"` property, the default maximum length is 512 bytes.
 
 *   **`order` Property:** The `order` property is crucial for controlling the display order of characteristics and their associated descriptors within the application's user interface. It's an integer value. Lower numbers are displayed first.
+
 ### List of Possible Descriptor Values
 
 ### *Tab Headers*
@@ -520,12 +521,19 @@ Allows selecting one of the text values from the options array.
 - [SignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/SignedIntegersBigEndian/SignedIntegersBigEndian.ino)
 
 #### SInt8Be
+
     {"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
+    
 #### SInt16Be
+
     {"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
+    
 #### SInt32Be
+
     {"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
+    
 #### SInt64Be
+
     {"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
 ### *Big Endian Signed Integer Sliders*
@@ -535,8 +543,11 @@ Allows selecting one of the text values from the options array.
 - [SignedIntegerSlidersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/SignedIntegerSlidersBigEndian/SignedIntegerSlidersBigEndian.ino)
 
 #### SInt8SliderBe
+
     {"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
+    
 #### SInt16SliderBe
+
     {"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
 ### *Big Endian Unsigned Integers*
@@ -546,12 +557,19 @@ Allows selecting one of the text values from the options array.
 - [UnsignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/UnsignedIntegersBigEndian/UnsignedIntegersBigEndian.ino)
 
 #### UInt8Be
+
     {"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
+    
 #### UInt16Be
+
     {"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
+    
 #### UInt32Be
+
     {"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
+    
 #### UInt64Be
+
     {"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
 ### *Big Endian Unsigned Integer Sliders*
@@ -561,8 +579,11 @@ Allows selecting one of the text values from the options array.
 - [UnsignedIntegersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/UnsignedIntegerSlidersBigEndian/UnsignedIntegerSlidersBigEndian.ino)
 
 #### UInt8SliderBe
+
     {"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
+    
 #### UInt16SliderBe
+
     {"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
 
 ### *Big Endian Floats*
@@ -572,10 +593,15 @@ Allows selecting one of the text values from the options array.
 - [FloatsBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatsBigEndian/FloatsBigEndian.ino)
 
 #### HalfBe
+
     {"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
+    
 #### FloatBe
+
     {"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat":-100, "maxFloat":100}
+    
 #### DoubleBe
+
     {"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
 
 ### *Big Endian Float Sliders*
@@ -585,8 +611,11 @@ Allows selecting one of the text values from the options array.
 - [FloatSlidersBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/FloatSlidersBigEndian/FloatSlidersBigEndian.ino)
 
 #### HalfSliderBe
+
     {"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+    
 #### FloatSliderBe
+
     {"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
 ### *Big Endian Date and Time*
@@ -596,14 +625,23 @@ Allows selecting one of the text values from the options array.
 - [DateAndTimeBigEndian.ino](Examples/ESP32/ArduinoIDE/AllControls/BigEndian/DateAndTimeBigEndian/DateAndTimeBigEndian.ino)
 
 #### TimeBe
+
     {"type":"timebe", "order":1, "disabled":false, "label":"Time"}
+    
 #### Date32Be
+
     {"type":"date32be", "order":1, "disabled":false, "label":"Date 32"}
+    
 #### Date64Be
+
     {"type":"date64be", "order":1, "disabled":false, "label":"Date 64"}
+    
 #### DateTime32Be
+
     {"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
+    
 #### DateTime64Be
+
     {"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
 
 ---
