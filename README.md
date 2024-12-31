@@ -58,7 +58,9 @@ Therefore, although the examples focus on ESP32, the information provided is app
 
 
 ### Naming a Service
-![Service tabs](DocResources/Controls/Service_tabs.jpg){:height="36px" width="36px"}
+
+<img src="DocResources/Controls/Service_tabs.jpg" alt="Service tabs" width="30" height="30">
+
 In order for the BLE Manager application to display a user-friendly, human-readable name for a given service, that service must expose a specific characteristic. The *value* of this characteristic will then be used as the service's displayed name within the application.
 
 To tell the BLE Manager application that a particular characteristic should be used for this purpose, we associate a *descriptor* with that characteristic. This descriptor has two key properties:
