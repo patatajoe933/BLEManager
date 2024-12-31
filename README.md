@@ -80,7 +80,8 @@ A typical example of this JSON value is: `{"type":"serviceName", "order":1}`
 
 Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and potentially edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
 
-Here's an example of such a JSON configuration: 
+Here's an example of such a JSON configuration:
+
 `{"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80}`
 
 **Explanation of the JSON properties:**
