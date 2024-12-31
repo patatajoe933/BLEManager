@@ -152,7 +152,9 @@ Descriptor values determine how characteristic values are interpreted and which 
 
 <img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
 
-[Indications.ino](Examples/ESP32/ArduinoIDE/HelloWorld/Indications/Indications.ino)
+#### Example
+
+- [Indications.ino](Examples/ESP32/ArduinoIDE/HelloWorld/Indications/Indications.ino)
 
 Descriptor values are in JSON format. Parsing is relatively lenient, however, property keys are *case-sensitive*. If a component has the option to limit the maximum and minimum values, the default setting corresponds to the maximum and minimum value of the given data type. For text, the default maximum value is 512 bytes. Every descriptor value contains the `order` property. `order` determines the display order in the application. If `order` is not set, the order is determined by the UUID value. Below are examples of individual settings with a description of their behavior.
 
