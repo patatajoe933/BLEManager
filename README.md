@@ -73,16 +73,16 @@ A typical example of this JSON value is: `{"type":"serviceName", "order":1}`
 *   `"type":"serviceName"`: This is the crucial property. It explicitly tells the BLE Manager application that the *value* of the associated characteristic should be interpreted and displayed as the name of the service.
 *   `"order":1`: This property determines the order in which this service (and its associated characteristics) are displayed within the application's user interface. A lower number means it will be displayed earlier in the list. This allows you to control the presentation of multiple services.
 
-**In summary:** By adding a descriptor with a UUID that matches the correct mask and the JSON value `{"type":"serviceName", "order":1}` to a characteristic, you effectively designate that characteristic as the source of the service's display name in the BLE Manager application. The actual name of the service will be the *value* of this characteristic (e.g., if the characteristic's value is "My Custom Service", that's what will be displayed in the app).
+**In summary:** By adding a descriptor with a UUID that matches the correct mask and the JSON value `{"type":"serviceName", "order":1}` to a characteristic, you effectively designate that characteristic as the source of the service's display name in the BLE Manager application. The actual name of the service will be the *value* of this characteristic (e.g., if the characteristic's value is "Service 1", that's what will be displayed in the app).
 
 
 ### Describing a Characteristic
-
-Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and potentially edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
+![Text Field](DocResources/Controls/Text_field.jpg)
+Let's say your BLE device has a characteristic that holds a text value, and you want this value to be displayed and edited in the BLE Manager application. You achieve this by adding a *descriptor* to that characteristic with a specific JSON configuration.
 
 Here's an example of such a JSON configuration:
 
-`{"type":"text", "order":1, "disabled":false, "label":"My Text Field Label", "maxBytes": 80}`
+`{"type":"text", "order":1, "disabled":false, "label":"Text Field Label", "maxBytes": 80}`
 
 **Explanation of the JSON properties:**
 
@@ -90,7 +90,7 @@ Here's an example of such a JSON configuration:
 *   `"order":1`: This defines the display order of this characteristic relative to other characteristics of the same service. Lower numbers appear first.
 *   `"disabled":false`: This property controls whether the text field is editable in the application. Setting it to `false` *intends* to enable editing. However, there's an important caveat:
     *   **Characteristic's Write Property Override:** The editability is ultimately determined by the characteristic's inherent properties. If the characteristic itself *does not* have the "write" permission enabled (meaning it's a read-only characteristic), then setting `"disabled":false` in the descriptor will have *no effect*. The text field will still be displayed as read-only.
-*   `"label":"My Text Field Label"`: This sets the label that will be displayed next to the text field in the application, providing context for the user.
+*   `"label":"Text Field Label"`: This sets the label that will be displayed next to the text field in the application, providing context for the user.
 *   `"maxBytes": 80`: This sets the maximum number of bytes that can be written to the characteristic through the text field in the application. This helps prevent buffer overflows and ensures data integrity.
 
 **Example scenario:**
@@ -122,7 +122,6 @@ This scenario demonstrates a powerful feature: using different descriptors (iden
 *   **Simplified User Interface:** Other users' apps can have a simpler UI that only shows the essential temperature controls.
 *   **Security:** By limiting access, you prevent accidental or unauthorized changes to critical settings like Wi-Fi configuration.
 
-
 ## Descriptor Values
 
 Descriptor values determine how characteristic values are interpreted and which graphical component is used for display. In BLE communication, the Little Endian format is typically used for interpreting characteristic values. However, all components interpreting multi-byte numbers also exist in a Big Endian variant. All components support notifications/indications from the device. If you are using notifications/indications, it may be necessary to enable MTU (Maximum Transmission Unit) negotiation in the application. The default MTU is 23 bytes. Notifications/Indications allow sending data of size MTU - 3. The "Negotiate Maximum MTU" setting allows, depending on the device, using an MTU of up to 517 bytes.
@@ -141,6 +140,8 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 ### List of Possible Descriptor Values
 
 #### *Tab Headers*
+
+![Service tabs](DocResources/Controls/Service_tabs.jpg)
 
 #### Service Name
 
@@ -167,6 +168,9 @@ Let's say a BLE service has a characteristic with the value "Heart Rate Monitor"
 This mechanism provides a user-friendly way to label and organize different BLE services within the application's interface. Instead of displaying cryptic UUIDs, users see descriptive names for each service, making it easier to interact with the device.
 
 #### *Texts*
+
+![Service tabs](DocResources/Controls/Texts.jpg)
+
 *All text values are encoded using UTF-8*
 #### Text View
 
@@ -215,6 +219,8 @@ Editable text field for entering a numerical password (PIN). `maxBytes` allows l
 
 #### *Signed Integers*
 
+![Service tabs](DocResources/Controls/Signed_integer.jpg)
+
 #### SInt8
 
     {"type":"sint8", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
@@ -241,6 +247,8 @@ Editable field for 64-bit signed integer
 
 #### *Signed Integer Sliders*
 
+![Service tabs](DocResources/Controls/SInt_slider.jpg)
+
 #### SInt8Slider
 
     {"type":"sint8slider", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
@@ -254,6 +262,8 @@ Slider for setting an 8-bit signed integer. The `stepInt` property determines th
 Slider for setting an 16-bit signed integer. The `stepInt` property determines the step size.
 
 #### *Unsigned Integers*
+
+![Service tabs](DocResources/Controls/Unsigned_integer.jpg)
 
 #### UInt8
 
@@ -281,6 +291,8 @@ Editable field for an 64-bit unsigned integer
 
 #### *Unsigned Integer Sliders*
 
+![Service tabs](DocResources/Controls/UInt_slider.jpg)
+
 #### UInt8Slider
 
     {"type":"uint8slider", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100, "stepInt":1}
@@ -294,6 +306,8 @@ Slider for setting an 8-bit unsigned integer. The `stepInt` property determines 
 Slider for setting an 16-bit unsigned integer. The `stepInt` property determines the step size.
 
 #### *Floats*
+
+![Service tabs](DocResources/Controls/Float.jpg)
 
 #### Half
 
@@ -315,6 +329,8 @@ Editable field for a 64-bit float
 
 #### *Float Sliders*
 
+![Service tabs](DocResources/Controls/Float_slider.jpg)
+
 #### HalfSlider
 
     {"type":"halfslider", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
@@ -328,6 +344,8 @@ Slider for setting a 16-bit float value. The `stepFloat` property determines the
 Slider for setting a 32-bit float value. The `stepFloat` property determines the step size.
 
 #### *Booleans*
+
+![Service tabs](DocResources/Controls/Booleans.jpg)
 
 #### Check
 
@@ -346,6 +364,9 @@ Switch for setting a boolean value of an 8-bit characteristic.
 - Writes `false = 0, true = 1`
 
 #### *Actions*
+
+![Service tabs](DocResources/Controls/Button.jpg)
+
 #### Button
 
     {"type":"button", "order":1, "disabled":false, "label":"Button"}
@@ -353,6 +374,9 @@ Switch for setting a boolean value of an 8-bit characteristic.
 On each press, the value of an 8-bit unsigned integer is incremented by one. It starts at `0`.
 
 #### *Colors*
+
+![Service tabs](DocResources/Controls/Color.jpg)
+
 #### Color
 
     {"type":"color", "order":1, "disabled":false, "label":"Color", "alphaSlider":true}
@@ -362,6 +386,8 @@ Colorpicker for color selection. Works with a 32-bit *ABGR* value, where *R* is 
 The `alphaSlider` property determines whether the alpha channel slider is displayed.
 
 #### *Date and Time*
+
+![Service tabs](DocResources/Controls/Date_Time.jpg)
 
 #### Time
 
@@ -392,6 +418,10 @@ Allows setting a 32-bit date and time. The value represents the number of second
     {"type":"datetime64", "order":1, "disabled":false, "label":"DateTime 64"}
 
 Allows setting a 64-bit date and time. The value represents the number of seconds since the beginning of the Unix epoch.
+
+#### *Selection from multiple options*
+
+![Service tabs](DocResources/Controls/Dropdown.jpg)
 
 #### Dropdown
 
