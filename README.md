@@ -1,4 +1,3 @@
-
 # BLE Manager
 
 Aplikace BLE Manager pro android umožňuje snadno spravovat hodnoty charakteristik Vašeho zařízení. Pro použití aplikace s vaším zařízením nepotřebujete žádná dodatečné knihovny. Stačí pouze charakteristiku označit descriptorem, který určí datový typ, požadovanou grafickou komponentu a další dodatečné vlastnosti, jako je například minimální a maximální hodnota. A to je vše. Po připojení aplikace k zařízení se takto označená charakteristika zobrazí v aplikaci.
@@ -52,6 +51,7 @@ Všechny komponenty podporují notifikace/indikace ze zařízení. V případě,
 
 ### Seznam možných hodnot descriptoru
 Hodnoty descriptoru jsou ve formátu JSON. Parsování je poměrně benevoletní, nicméně klíče vlastností jsou case sensitive. Pokud má komponenta možnost omezení maximální a minimální hodnoty, výchozí nastavení odpovídá maximální a minimální hodnotě daného datového typu. U textu je výchozí maximální hodnota 512 bajtů. Každá hodnota descriptrou obsahuje vlastnost order. Order určuje pořadí zobrazení v aplikaci. Pokud není order nastaven, je pořadí určenou hodnotou UUID. Níže jsou uvedeny příklady jednotlivých nastavení s popisem chování.
+#### *Tab Headers*
 #### Název služby
 
     {"type":"serviceName", "order":1}
@@ -289,41 +289,63 @@ Umožňuje výběr jedné z textových hodnot z pole options.
 ### BigEndian varianty komponent
 8bitové varinty se mohou zdát jako nadbytečné, ale jsou zde z důvodu konzistentní interpretace dat. Každá integer komponenta dokáže totiž zpravocat libovolně dlouhou hodnotu tak, že ji ořízne na požadovaný počet bajtů.
 
-#### Big Endian Signed Integers
-{"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
-{"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
-{"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
-{"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
+#### *Big Endian Signed Integers*
+#### SInt8Be
+    {"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
+#### SInt16Be
+    {"type":"sint16be", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-100, "maxInt":100}
+#### SInt32Be
+    {"type":"sint32be", "order":1, "disabled":false, "label":"Signed Int32", "minInt":-100, "maxInt":100}
+#### SInt64Be
+    {"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
-#### Big Endian Signed Integer Sliders
-{"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
-{"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
+#### *Big Endian Signed Integer Sliders*
+#### SInt8SliderBe
+    {"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
+#### SInt16SliderBe
+    {"type":"sint16sliderbe", "order":1, "disabled":false, "label":"Signed Int16", "minInt":-50, "maxInt":50, "stepInt":1}
 
-#### Big Endian Unsigned Integers
-{"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
-{"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
-{"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
-{"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
+#### *Big Endian Unsigned Integers*
+#### UInt8Be
+    {"type":"uint8be", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":100}
+#### UInt16Be
+    {"type":"uint16be", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":100}
+#### UInt32Be
+    {"type":"uint32be", "order":1, "disabled":false, "label":"Unsigned Int32", "minInt":0, "maxInt":100}
+#### UInt64Be
+    {"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
-#### Big Endian Unsigned Integer Sliders
-{"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
-{"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
+#### *Big Endian Unsigned Integer Sliders*
+#### UInt8SliderBe
+    {"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
+#### UInt16SliderBe
+    {"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
 
-#### Big Endian Floats
-{"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
-{"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat":-100, "maxFloat":100}
-{"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
+#### *Big Endian Floats*
+#### HalfBe
+    {"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
+#### FloatBe
+    {"type":"floatbe", "order":1, "disabled":false, label:"Float 32", "minFloat":-100, "maxFloat":100}
+#### DoubleBe
+    {"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
 
-#### Big Endian Float Sliders
-{"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
-{"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+#### *Big Endian Float Sliders*
+#### HalfSliderBe
+    {"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
+#### FloatSliderBe
+    {"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
-#### Big Endian Date and Time
-{"type":"timebe", "order":1, "disabled":false, "label":"Time"}
-{"type":"date32be", "order":1, "disabled":false, "label":"Date 32"}
-{"type":"date64be", "order":1, "disabled":false, "label":"Date 64"}
-{"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
-{"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
+#### *Big Endian Date and Time*
+#### TimeBe
+    {"type":"timebe", "order":1, "disabled":false, "label":"Time"}
+#### Date32Be
+    {"type":"date32be", "order":1, "disabled":false, "label":"Date 32"}
+#### Date64Be
+    {"type":"date64be", "order":1, "disabled":false, "label":"Date 64"}
+#### DateTime32Be
+    {"type":"datetime32be", "order":1, "disabled":false, "label":"DateTime 32"}
+#### DateTime64Be
+    {"type":"datetime64be", "order":1, "disabled":false, "label":"DateTime 64"}
 
 
 
