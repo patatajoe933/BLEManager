@@ -221,7 +221,7 @@ Editable text field for entering a password. `maxBytes` allows limiting the maxi
 
 Editable text field for entering a numerical password (PIN). `maxBytes` allows limiting the maximum number of bytes entered (not the number of characters). The maximum that can be entered is 512 bytes.
 
-#### *Signed Integers*
+### *Signed Integers*
 
 <img src="DocResources/Controls/Signed_integer.jpg" alt="Signed Integer" height="60">
 
@@ -437,7 +437,7 @@ Allows selecting one of the text values from the options array.
 
 8-bit variants may seem redundant, but they exist for consistent data interpretation. Each integer component can process an arbitrarily long value by truncating it to the required number of bytes.
 
-#### *Big Endian Signed Integers*
+### *Big Endian Signed Integers*
 #### SInt8Be
     {"type":"sint8be", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-100, "maxInt":100}
 #### SInt16Be
@@ -447,7 +447,7 @@ Allows selecting one of the text values from the options array.
 #### SInt64Be
     {"type":"sint64be", "order":1, "disabled":false, "label":"Signed Int64", "minInt":-100, "maxInt":100}
 
-#### *Big Endian Signed Integer Sliders*
+### *Big Endian Signed Integer Sliders*
 #### SInt8SliderBe
     {"type":"sint8sliderbe", "order":1, "disabled":false, "label":"Signed Byte", "minInt":-50, "maxInt":50, "stepInt":1}
 #### SInt16SliderBe
@@ -463,13 +463,13 @@ Allows selecting one of the text values from the options array.
 #### UInt64Be
     {"type":"uint64be", "order":1, "disabled":false, "label":"Unsigned Int64", "minInt":0, "maxInt":100}
 
-#### *Big Endian Unsigned Integer Sliders*
+### *Big Endian Unsigned Integer Sliders*
 #### UInt8SliderBe
     {"type":"uint8sliderbe", "order":1, "disabled":false, "label":"Unsigned Byte", "minInt":0, "maxInt":50, "stepInt":1}
 #### UInt16SliderBe
     {"type":"uint16sliderbe", "order":1, "disabled":false, "label":"Unsigned Int16", "minInt":0, "maxInt":50, "stepInt":1}
 
-#### *Big Endian Floats*
+### *Big Endian Floats*
 #### HalfBe
     {"type":"halfbe", "order":1, "disabled":false, "label":"Float 16", "minFloat":-100, "maxFloat":100}
 #### FloatBe
@@ -477,13 +477,13 @@ Allows selecting one of the text values from the options array.
 #### DoubleBe
     {"type":"doublebe", "order":1, "disabled":false, label:"Float 64", "minFloat":-100, "maxFloat":100}
 
-#### *Big Endian Float Sliders*
+### *Big Endian Float Sliders*
 #### HalfSliderBe
     {"type":"halfsliderbe", "order":1, "disabled":false, "label":"Float 16", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 #### FloatSliderBe
     {"type":"floatsliderbe", "order":1, "disabled":false, label:"Float 32", "minFloat": -50, "maxFloat": 50, "stepFloat": 0.1}
 
-#### *Big Endian Date and Time*
+### *Big Endian Date and Time*
 #### TimeBe
     {"type":"timebe", "order":1, "disabled":false, "label":"Time"}
 #### Date32Be
