@@ -143,7 +143,7 @@ Descriptor values are in JSON format. Parsing is relatively lenient, however, pr
 *   **`order` Property:** The `order` property is crucial for controlling the display order of characteristics and their associated descriptors within the application's user interface. It's an integer value. Lower numbers are displayed first.
 ### List of Possible Descriptor Values
 
-#### *Tab Headers*
+### *Tab Headers*
 
 <img src="DocResources/Controls/Service_tabs.jpg" alt="Service tabs" height="60">
 
@@ -171,7 +171,7 @@ Let's say a BLE service has a characteristic with the value "Heart Rate Monitor"
 
 This mechanism provides a user-friendly way to label and organize different BLE services within the application's interface. Instead of displaying cryptic UUIDs, users see descriptive names for each service, making it easier to interact with the device.
 
-#### *Texts*
+### *Texts*
 
 <img src="DocResources/Controls/Texts.jpg" alt="Texts" height="240">
 
@@ -249,7 +249,7 @@ Editable field for 32-bit signed integer
 
 Editable field for 64-bit signed integer
 
-#### *Signed Integer Sliders*
+### *Signed Integer Sliders*
 
 <img src="DocResources/Controls/SInt_slider.jpg" alt="Signed Integer Slider" height="60">
 
@@ -293,7 +293,7 @@ Editable field for an 32-bit unsigned integer
 
 Editable field for an 64-bit unsigned integer
 
-#### *Unsigned Integer Sliders*
+### *Unsigned Integer Sliders*
 
 <img src="DocResources/Controls/UInt_slider.jpg" alt="Unsigned Integer Slider" height="60">
 
@@ -309,7 +309,7 @@ Slider for setting an 8-bit unsigned integer. The `stepInt` property determines 
 
 Slider for setting an 16-bit unsigned integer. The `stepInt` property determines the step size.
 
-#### *Floats*
+### *Floats*
 
 <img src="DocResources/Controls/Float.jpg" alt="Float" height="60">
 
@@ -331,7 +331,7 @@ Editable field for a 32-bit float
 
 Editable field for a 64-bit float
 
-#### *Float Sliders*
+### *Float Sliders*
 
 <img src="DocResources/Controls/Float_slider.jpg" alt="Float Slider" height="60">
 
@@ -347,7 +347,7 @@ Slider for setting a 16-bit float value. The `stepFloat` property determines the
 
 Slider for setting a 32-bit float value. The `stepFloat` property determines the step size.
 
-#### *Booleans*
+### *Booleans*
 
 <img src="DocResources/Controls/Booleans.jpg" alt="Booleans" height="120">
 
@@ -367,7 +367,7 @@ Switch for setting a boolean value of an 8-bit characteristic.
 - Reads `0 = false, otherwise true`
 - Writes `false = 0, true = 1`
 
-#### *Actions*
+### *Actions*
 
 <img src="DocResources/Controls/Button.jpg" alt="Button" height="60">
 
@@ -377,7 +377,7 @@ Switch for setting a boolean value of an 8-bit characteristic.
 
 On each press, the value of an 8-bit unsigned integer is incremented by one. It starts at `0`.
 
-#### *Colors*
+### *Colors*
 
 <img src="DocResources/Controls/Color.jpg" alt="Color" height="60">
 
@@ -389,7 +389,7 @@ Colorpicker for color selection. Works with a 32-bit *ABGR* value, where *R* is 
 *For 0xFF05E6F2 is A:0xFF, B:0x05, G:0xE6, R:0xF2*
 The `alphaSlider` property determines whether the alpha channel slider is displayed.
 
-#### *Date and Time*
+### *Date and Time*
 
 <img src="DocResources/Controls/Date_Time.jpg" alt="Date and Time" height="240">
 
@@ -423,7 +423,7 @@ Allows setting a 32-bit date and time. The value represents the number of second
 
 Allows setting a 64-bit date and time. The value represents the number of seconds since the beginning of the Unix epoch.
 
-#### *Selection from multiple options*
+### *Selection from multiple options*
 
 <img src="DocResources/Controls/Dropdown_field.jpg" alt="Dropdown" height="60">
 
