@@ -650,4 +650,4 @@ Allows selecting one of the text values from the options array.
 
 ---
 
-[Privacy Policy](PrivacyPolicy/Index.md)
+[Privacy Policy](Privacy_policy.md)
