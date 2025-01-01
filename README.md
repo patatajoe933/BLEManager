@@ -1,4 +1,4 @@
-<img src="DocResources/Screens/Demo.jpg" alt="Application Screens" height="300">
+<img src="DocResources/Screens/Demo.jpg" alt="Application Screens">
 
 ***The application will be publicly available soon. If you would like to participate in closed testing, please contact me at [petr.satka@gmail.com](mailto:petr.satka@gmail.com).***
 
