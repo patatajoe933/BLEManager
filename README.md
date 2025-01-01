@@ -650,4 +650,47 @@ Allows selecting one of the text values from the options array.
 
 ---
 
+## FAQ
+
+### The paired/bonded device is not functioning properly
+
+Pairing/bonding is a process that takes place between your device and the Android system. The BLE manager does not interfere with this process in any way. Android **caches** information about services, characteristics, and descriptors for paired devices. After modifying your device's software, if you are using pairing, it is necessary to **unpair** and **re-pair** the device in Android. Alternatively, you can try clearing the cache directly from the BLE Manager app. *Clearing the cache calls an unofficial API and may not work correctly on all Android devices.* **It is best to enable pairing on the device only after development is complete.**
+
+<img src="DocResources/Controls/Device_menu.jpg" alt="Device Menu" height="40">
+
+
+### What is descriptor 0x2902?
+
+The Client Characteristic Configuration Descriptor (CCCD), identified by the UUID *0x2902*, enables a Bluetooth Low Energy (BLE) client to configure how it receives updates from a characteristic on a server. Specifically, it allows the client to request to receive *notifications* or *indications*. If a characteristic is designed to support notifications or indications (meaning the server can send asynchronous updates to the client), it *must* include this descriptor. Without the CCCD, the client has no mechanism to enable or disable these updates.
+
+#### Example
+
+- [Indications.ino](Examples/ESP32/ArduinoIDE/HelloWorld/Indications/Indications.ino)
+
+### I don't see all the characteristics in the app
+
+On ESP32, a service has 15 handles by default (identifiers for the service, characteristics, and descriptors). A characteristic needs 2 handles, a descriptor 1. To increase the number of handles, use a parameter when creating the service: 
+
+`BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32); // 32 handles`
+This allows defining more elements in the service, but platform limitations must be considered.
+
+### The ESP32 fails to boot after configuring a custom descriptor in the BLE service
+
+The default length of a descriptor value in *ESP32* is limited to *100 bytes*. Exceeding this length leads to unauthorized memory access (memory corruption). You can increase the maximum descriptor value length in this way: 
+
+`BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200); // 200 bytes`
+
+### The notified/indicated data is truncated
+
+According to the Bluetooth Low Energy (BLE) specification, the maximum size of data that can be sent in a single notification or indication is limited to the Maximum Transmission Unit (MTU) minus 3 bytes. The default MTU is 23 bytes, meaning that *by default, you can send a maximum of 20 bytes* of data in a single notification or indication. If you need to send larger amounts of data, you can **enable MTU negotiation** in application. By enabling MTU negotiation in the BLE Manager, the MTU can be increased up to 517 bytes.
+
+<img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
+
+### RichText is not working for the values received via notifications/indications
+According to the Bluetooth Low Energy (BLE) specification, the maximum size of data that can be sent in a single notification or indication is limited to the Maximum Transmission Unit (MTU) minus 3 bytes. The default MTU is 23 bytes, meaning that *by default, you can send a maximum of 20 bytes* of data in a single notification or indication. If you need to send larger amounts of data, you can **enable MTU negotiation** in application. By enabling MTU negotiation in the BLE Manager, the MTU can be increased up to 517 bytes.
+
+<img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
+
+---
+
 [Privacy Policy](Privacy_policy.md)
