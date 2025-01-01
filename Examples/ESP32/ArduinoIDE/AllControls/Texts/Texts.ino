@@ -52,7 +52,7 @@ void setup() {
 
   // Create a BLE service with a predefined UUID
   // Service handles by default 15 handles. Each BLE Characteristic takes 2 handles and each BLE Descriptor takes 1 handle.
-  BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32);  //32 handlers
+  BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32);  //32 handles
   // If you add or remove characteristics, it may be necessary to forget the device
   // in the Bluetooth settings and re-pair it on Android for changes to take effect.
 
