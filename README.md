@@ -669,13 +669,16 @@ The Client Characteristic Configuration Descriptor (CCCD), identified by the UUI
 
 ### I don't see all the characteristics in the app
 
-On ESP32, a service has 15 handles by default (identifiers for the service, characteristics, and descriptors). A characteristic needs 2 handles, a descriptor 1. To increase the number of handles, use a parameter when creating the service: 
+On ESP32, a service has 15 handles by default (identifiers for the service, characteristics, and descriptors). A characteristic needs 2 handles, a descriptor 1. To increase the number of handles, use a parameter when creating the service:
+
     BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32); // 32 handles
+    
 This allows defining more elements in the service, but platform limitations must be considered.
 
 ### The ESP32 fails to boot after configuring a custom descriptor in the BLE service
 
-The default length of a descriptor value in *ESP32* is limited to *100 bytes*. Exceeding this length leads to unauthorized memory access (memory corruption). You can increase the maximum descriptor value length in this way: 
+The default length of a descriptor value in *ESP32* is limited to *100 bytes*. Exceeding this length leads to unauthorized memory access (memory corruption). You can increase the maximum descriptor value length in this way:
+
     BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200); // 200 bytes
 
 ### The notified/indicated data is truncated
