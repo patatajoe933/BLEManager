@@ -687,7 +687,7 @@ According to the Bluetooth Low Energy (BLE) specification, the maximum size of d
 
 <img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
 
-### RichText is not working for the values received via notifications/indications
+### RichTextView is not working for the values received via notifications/indications
 According to the Bluetooth Low Energy (BLE) specification, the maximum size of data that can be sent in a single notification or indication is limited to the Maximum Transmission Unit (MTU) minus 3 bytes. The default MTU is 23 bytes, meaning that *by default, you can send a maximum of 20 bytes* of data in a single notification or indication. If you need to send larger amounts of data, you can **enable MTU negotiation** in application. By enabling MTU negotiation in the BLE Manager, the MTU can be increased up to 517 bytes.
 
 <img src="DocResources/Controls/Mtu.jpg" alt="MTU Settings" height="40">
