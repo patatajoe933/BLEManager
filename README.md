@@ -656,7 +656,7 @@ Allows selecting one of the text values from the options array.
 
 Pairing/bonding is a process that takes place between your device and the Android system. The BLE manager does not interfere with this process in any way. Android **caches** information about services, characteristics, and descriptors for paired devices. After modifying your device's software, if you are using pairing, it is necessary to **unpair** and **re-pair** the device in Android. Alternatively, you can try clearing the cache directly from the BLE Manager app. *Clearing the cache calls an unofficial API and may not work correctly on all Android devices.* **It is best to enable pairing on the device only after development is complete.**
 
-<img src="DocResources/Controls/Device_menu.jpg" alt="Device Menu" height="40">
+<img src="DocResources/Controls/Device_menu.jpg" alt="Device Menu" height="120">
 
 
 ### What is descriptor 0x2902?
@@ -670,14 +670,12 @@ The Client Characteristic Configuration Descriptor (CCCD), identified by the UUI
 ### I don't see all the characteristics in the app
 
 On ESP32, a service has 15 handles by default (identifiers for the service, characteristics, and descriptors). A characteristic needs 2 handles, a descriptor 1. To increase the number of handles, use a parameter when creating the service: 
-
 `BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 32); // 32 handles`
 This allows defining more elements in the service, but platform limitations must be considered.
 
 ### The ESP32 fails to boot after configuring a custom descriptor in the BLE service
 
 The default length of a descriptor value in *ESP32* is limited to *100 bytes*. Exceeding this length leads to unauthorized memory access (memory corruption). You can increase the maximum descriptor value length in this way: 
-
 `BLEDescriptor *serviceNameDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200); // 200 bytes`
 
 ### The notified/indicated data is truncated
