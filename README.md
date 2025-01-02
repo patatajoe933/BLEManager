@@ -1,6 +1,6 @@
 <img src="DocResources/Screens/Demo.jpg" alt="Application Screens">
 
-***The application will be publicly available soon. If you would like to participate in closed testing, please contact me at [petr.satka@gmail.com](mailto:petr.satka@gmail.com).***
+***The application will be publicly available soon. To get early access to the app, you need to first join the Google Group [https://groups.google.com/g/blemanager](https://groups.google.com/g/blemanager) and then sign up for closed testing here [https://play.google.com/apps/testing/net.satka.bleManager](https://play.google.com/apps/testing/net.satka.bleManager).***
 
 # BLE Manager
 
