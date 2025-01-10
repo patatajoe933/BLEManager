@@ -41,9 +41,7 @@ In more advanced scenarios, different masks can be used to achieve more complex 
  
  - **Configure a custom descriptor for each characteristic you want to manage.**
  
- This is the only required step on the device side. This example shows how to create a custom descriptor that will display the associated characteristic as a editable text field within the BLE Manager application.
- 
- Here is an example of how to create a custom descriptor in the Arduino Framework. `BLEDescriptor` class is a part of the Arduino Framework. For BLE Manager, we only set the JSON value.
+ This is the only required step on the device side. The example below demonstrates how to create a custom descriptor using the `BLEDescriptor` class from the Arduino Framework. In the BLE Manager application, the associated characteristic will be displayed as an editable text field. To achieve this, we only need to set the JSON value. It doesn’t matter which framework or device you are using; the key is the value of the descriptor.
 
 	BLEDescriptor *textDescriptor = new BLEDescriptor(CUSTOM_DESCRIPTOR_UUID, 200);
 	textDescriptor->setValue(
