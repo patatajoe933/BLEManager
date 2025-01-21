@@ -1,6 +1,9 @@
 <img src="DocResources/Screens/Demo.jpg" alt="Application Screens">
 
-***The application will be publicly available soon. To get early access to the app, you need to first join the Google Group [https://groups.google.com/g/blemanager](https://groups.google.com/g/blemanager) and then sign up for closed testing here [https://play.google.com/apps/testing/net.satka.bleManager](https://play.google.com/apps/testing/net.satka.bleManager).***
+# Release
+The BLE Manager app for Android 13 and higher can be downloaded here.
+- [Version 16](https://github.com/petrsatka/BLEManager/releases/download/r16/ble-manager.apk)
+- [All releases](https://github.com/petrsatka/BLEManager/releases)
 
 # BLE Manager
 
