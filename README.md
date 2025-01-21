@@ -701,4 +701,8 @@ According to the Bluetooth Low Energy (BLE) specification, the maximum size of d
 
 ---
 
+[![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://www.paypal.com/donate/?hosted_button_id=CMFG2C4BNH9P2)
+
+---
+
 [Privacy Policy](Privacy_policy.md)
