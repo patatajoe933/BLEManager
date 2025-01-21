@@ -5,6 +5,8 @@ The BLE Manager app for Android 13 and higher can be downloaded here.
 - [Version 16](https://github.com/petrsatka/BLEManager/releases/download/r16/ble-manager.apk)
 - [All releases](https://github.com/petrsatka/BLEManager/releases)
 
+[![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://www.paypal.com/donate/?hosted_button_id=CMFG2C4BNH9P2)
+
 # BLE Manager
 
 The BLE Manager application for Android makes it easy to manage the characteristics of your device. **No additional libraries** are required to use the app with your device. **Simply annotate the characteristic with a descriptor** specifying the data type, the desired graphical component, and additional properties such as minimum and maximum values. **That's it!** Once the application connects to your device, the described characteristic will appear in the app, allowing you to **read** and **set** its value. All components also support notifications and indications from the device.
