@@ -2,7 +2,12 @@
 
 # Downloads
 ## Android Application
-The BLE Manager app for Android 13 and higher
+The BLE Manager app for Android 13 and higher.
+
+Download latest version by scanning the QR code or clicking the link below.
+
+<img src="DocResources/latest_release.svg" alt="Latest version QR code" height="240">
+
 - [Latest Version](https://github.com/petrsatka/BLEManager/releases/latest/download/ble-manager.apk)
 - [All releases](https://github.com/petrsatka/BLEManager/releases)
 
