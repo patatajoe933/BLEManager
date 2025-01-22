@@ -3,7 +3,7 @@
 # Downloads
 ## Android Application
 The BLE Manager app for Android 13 and higher
-- [Latest Version (16)](https://github.com/petrsatka/BLEManager/releases/download/r16/ble-manager.apk)
+- [Latest Version](https://github.com/petrsatka/BLEManager/releases/latest/download/ble-manager.apk)
 - [All releases](https://github.com/petrsatka/BLEManager/releases)
 
 ## Examples
