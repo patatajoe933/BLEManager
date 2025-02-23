@@ -23,7 +23,7 @@ okhttp = "4.12.0"
 okhttp-logging = "4.12.0"
 dataStorePreferences = "1.1.1"
 billing = "7.1.1"
-flaskColorPicker = "0.0.13"
+flaskColorPicker = "0.0.15"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,7 +46,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-#flask-colorpicker = {group = "com.github.QuadFlask", name = "colorpicker", version.ref="flaskColorPicker" }
+flask-colorpicker = {group = "com.github.QuadFlask", name = "colorpicker", version.ref="flaskColorPicker" }
 androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCommon" }
 androidx-room-runtime = { group = "androidx.room", name="room-runtime", version.ref = "roomCommon" }
