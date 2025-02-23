@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_height_large">16dp</dimen>
+    <dimen name="fab_add_device_bottom_margin">24dp</dimen>
+    <dimen name="fab_add_device_right_margin">24dp</dimen>
+</resources>

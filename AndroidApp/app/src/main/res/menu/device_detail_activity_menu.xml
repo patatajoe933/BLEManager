@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/donate"
+        android:title="@string/extensions"
+        android:contentDescription="@string/extensions"
+        android:icon="@drawable/outline_volunteer_activism_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/data_refresh"
+        android:title="@string/refresh_data"
+        android:contentDescription="@string/refresh_data"
+        android:icon="@drawable/outline_refresh_24"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/device_settings"
+        android:title="@string/device_settings"
+        android:contentDescription="@string/device_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/device_refresh"
+        android:title="@string/clear_gatt_cache"
+        android:contentDescription="@string/clear_gatt_cache"
+        app:showAsAction="never" />
+</menu>
