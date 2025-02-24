@@ -13,6 +13,13 @@ android {
     namespace = "net.satka.bleManager"
     compileSdk = 35
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     defaultConfig {
         applicationId = "net.satka.bleManager"
         minSdk = 33
