@@ -24,8 +24,8 @@ android {
         applicationId = "net.satka.bleManager"
         minSdk = 33
         targetSdk = 35
-        versionCode = 17
-        versionName = "17"
+        versionCode = 18
+        versionName = "18"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
