@@ -115,6 +115,10 @@ class DeviceDetailActivity : AppCompatActivity() {
     }
 
     private fun showConnectionProblemsHelp(show: Boolean) {
+        if (isDestroyed || isFinishing) {
+            return
+        }
+
         if (show) {
             if (!connectionHelpHasBeenActivated) {
                 val connectionProblemsHelp =
@@ -140,21 +144,23 @@ class DeviceDetailActivity : AppCompatActivity() {
         connectTimeoutJob?.cancel()
         connectTimeoutJob = connectTimeoutScope.launch {
             var c = 0;
-            while (true) {
+            while (!isDestroyed && !isFinishing) {
                 delay(TIMEOUT_DURATION_MILLIS)
-                showConnectionProblemsHelp(true)
-                Snackbar.make(
-                    binding.root,
-                    getString(
-                        if (++c % 3 == 0) {
-                            R.string.not_responding_too_long
-                        } else {
-                            R.string.not_responding
-                        }
-                    ),
-                    SNACKS_DURATION_MILLIS
-                ).setTextMaxLines(10).show()
-                delay(SNACKS_DURATION_MILLIS.toLong())
+                if (!isDestroyed && !isFinishing) {
+                    showConnectionProblemsHelp(true)
+                    Snackbar.make(
+                        binding.root,
+                        getString(
+                            if (++c % 3 == 0) {
+                                R.string.not_responding_too_long
+                            } else {
+                                R.string.not_responding
+                            }
+                        ),
+                        SNACKS_DURATION_MILLIS
+                    ).setTextMaxLines(10).show()
+                    delay(SNACKS_DURATION_MILLIS.toLong())
+                }
             }
         }
     }
