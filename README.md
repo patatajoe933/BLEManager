@@ -6,20 +6,26 @@
 The BLE Manager app for Android 13 and higher.
 
 ### Download from F-Droid (Recommended)
+
 <img src="DocResources/fdroid.svg" alt="F-Droid QR code" height="240">
 
 - [F-Droid](https://f-droid.org/en/packages/net.satka.bleManager/)
 
 ### Download from Github
+
 <img src="DocResources/latest_release.svg" alt="Latest version QR code" height="240">
 
 - [Latest Version](https://github.com/petrsatka/BLEManager/releases/latest/download/ble-manager.apk)
 - [All releases](https://github.com/petrsatka/BLEManager/releases)
 
 ## Examples
+
 A set of examples for various components and use cases
 - [Examples](https://github.com/petrsatka/BLEManager/tree/main/Examples)
 
+## Support the Project
+
+If you like this project, consider supporting it with a donation.
 [![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://www.paypal.com/donate/?hosted_button_id=CMFG2C4BNH9P2)
 
 # BLE Manager - Interface for Your Device
